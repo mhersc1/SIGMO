@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/09/2014 08:29:07 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="bean.Detallecotizacion" table="detallecotizacion" catalog="sigmo_desarrollo">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cotizacion" class="bean.Cotizacion" fetch="select">
+            <column name="CODCOTIZACION" />
+        </many-to-one>
+        <property name="codigo" type="string">
+            <column name="CODIGO" length="20" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="60" />
+        </property>
+        <property name="nrodepiezas" type="java.lang.Integer">
+            <column name="NRODEPIEZAS" />
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="PRECIO" precision="10" scale="0" />
+        </property>
+        <property name="importe" type="big_decimal">
+            <column name="IMPORTE" precision="10" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/09/2014 08:29:07 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="bean.Cliente" table="cliente" catalog="sigmo_desarrollo">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="30" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="APELLIDOS" length="30" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="DIRECCION" length="100" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" length="30" />
+        </property>
+        <set name="cotizacions" table="cotizacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDCLIENTE" />
+            </key>
+            <one-to-many class="bean.Cotizacion" />
+        </set>
+        <set name="documentosclientes" table="documentoscliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDCLIENTE" not-null="true" />
+            </key>
+            <one-to-many class="bean.Documentoscliente" />
+        </set>
+    </class>
+</hibernate-mapping>

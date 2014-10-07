@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+	<navigation-rule>
+		<from-view-id>/vistas/inicioSesion.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>menuSecretaria</from-outcome>
+			<to-view-id>/vistas/menuSecretaria.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuGerente</from-outcome>
+			<to-view-id>/vistas/menuGerente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuCajera</from-outcome>
+			<to-view-id>/vistas/menuCajera.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuVentas</from-outcome>
+			<to-view-id>/vistas/menuVentas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>menuAlmacen</from-outcome>
+			<to-view-id>/vistas/menuAlmacen.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>usuarioNoExiste</from-outcome>
+			<to-view-id>/vistas/userNotExists.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/vistas/menuAlmacen.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>inicioSesion</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/vistas/menuCajera.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>inicioSesion</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/vistas/menuGerente.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>inicioSesion</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/vistas/menuSecretaria.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>inicioSesion</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/vistas/menuVentas.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>inicioSesion</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>registrarCotizacion</from-outcome>
+			<to-view-id>/vistas/registrarCotizacion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/09/2014 08:29:07 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="bean.Documentoscliente" table="documentoscliente" catalog="sigmo_desarrollo">
+        <composite-id name="id" class="bean.DocumentosclienteId">
+            <key-property name="idcliente" type="int">
+                <column name="IDCLIENTE" />
+            </key-property>
+            <key-property name="iddocumento" type="int">
+                <column name="IDDOCUMENTO" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="cliente" class="bean.Cliente" update="false" insert="false" fetch="select">
+            <column name="IDCLIENTE" not-null="true" />
+        </many-to-one>
+        <many-to-one name="documento" class="bean.Documento" update="false" insert="false" fetch="select">
+            <column name="IDDOCUMENTO" not-null="true" />
+        </many-to-one>
+        <property name="identificador" type="string">
+            <column name="IDENTIFICADOR" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

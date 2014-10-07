@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head></h:head>
+<h:body>
+
+	<h:form method="post">
+		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+		<h:panelGrid columns="2">
+			<h:outputLabel for="usuario" value="usuario:" />
+            <p:inputText id="usuario" value="#{loginMB.usuarioForm.usuario}" required="true" label="usuario" />
+ 
+            <h:outputLabel for="clave" value="clave:" />
+            <p:password id="clave" value="#{loginMB.usuarioForm.clave}" required="true" label="clave" />
+ 
+            <f:facet name="footer">
+                <p:commandButton value="Iniciar Sesion" update="growl" action="#{loginMB.iniciarSesion}"
+                                />
+            </f:facet> 
+			
+
+
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

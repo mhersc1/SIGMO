@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/09/2014 08:29:07 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="bean.Producto" table="producto" catalog="sigmo_desarrollo">
+        <id name="codigo" type="int">
+            <column name="CODIGO" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="unidad" class="bean.Unidad" fetch="select">
+            <column name="UNIDAD" />
+        </many-to-one>
+        <property name="espesor" type="java.lang.Integer">
+            <column name="ESPESOR" />
+        </property>
+        <property name="ancho" type="java.lang.Integer">
+            <column name="ANCHO" />
+        </property>
+        <property name="largo" type="java.lang.Integer">
+            <column name="LARGO" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="60" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+      <h:head></h:head>
+	<h:body>
+	<h:form id="form">  
+    <p:growl id="messages"/>
+ 	<p:commandLink action="#{sesionMB.cerrarSesion}">Cerrar Sesion</p:commandLink>
+    <p:menubar>
+    
+    <p:submenu label="Guias" icon="ui-icon-document">
+          
+                <p:menuitem value="Registro" url="registrar" />
+                <p:menuitem value="Listado" url="listar" />
+            
+          
+        </p:submenu>
+     <p:submenu label="Ordenes" icon="ui-icon-document">
+          
+                <p:menuitem value="Listado" url="listar" />
+            
+          
+        </p:submenu>
+    
+       
+    </p:menubar>
+	</h:form>
+	</h:body>
+</html>
