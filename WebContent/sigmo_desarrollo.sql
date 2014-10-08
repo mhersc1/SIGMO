@@ -1,30 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 3.5.1
--- http://www.phpmyadmin.net
---
--- Servidor: localhost
--- Tiempo de generación: 01-10-2014 a las 21:25:37
--- Versión del servidor: 5.5.24-log
--- Versión de PHP: 5.4.3
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+drop schema sigmo_desarrollo;
+create schema sigmo_desarrollo;
+use sigmo_desarrollo;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Base de datos: `sigmo_desarrollo`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cliente`
---
 
 CREATE TABLE IF NOT EXISTS `cliente` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -35,18 +13,8 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- Volcado de datos para la tabla `cliente`
---
 
-INSERT INTO `cliente` (`ID`, `NOMBRE`, `APELLIDOS`, `DIRECCION`, `EMAIL`) VALUES
-(1, 'Maycol', 'Espinoza', 'Rimac', 'mher_91@hotmail.com');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `cotizacion`
---
 
 CREATE TABLE IF NOT EXISTS `cotizacion` (
   `CODIGO` int(11) NOT NULL AUTO_INCREMENT,
@@ -57,18 +25,10 @@ CREATE TABLE IF NOT EXISTS `cotizacion` (
   KEY `FK_CLIENTE` (`IDCLIENTE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `cotizacion`
---
 
-INSERT INTO `cotizacion` ( `FECHAREGISTRO`, `IMPORTETOTAL`, `IDCLIENTE`) VALUES
-('1991-12-14', 450, 1);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `detallecotizacion`
---
+
 
 CREATE TABLE IF NOT EXISTS `detallecotizacion` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -82,12 +42,8 @@ CREATE TABLE IF NOT EXISTS `detallecotizacion` (
   KEY `FK_CODCOTIZACION` (`CODCOTIZACION`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-INSERT INTO DETALLECOTIZACION(CODIGO,DESCRIPCION,NRODEPIEZAS,PRECIO,IMPORTE,CODCOTIZACION) 
-VALUES('000024','MADERA CAOBA',10,2.5,25,1);
---
--- Estructura de tabla para la tabla `documento`
---
+
+
 
 CREATE TABLE IF NOT EXISTS `documento` (
   `ID` int(11) NOT NULL,
@@ -95,21 +51,8 @@ CREATE TABLE IF NOT EXISTS `documento` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `documento`
---
 
-INSERT INTO `documento` (`ID`, `TIPO`) VALUES
-(1, 'DNI'),
-(2, 'PASAPORTE'),
-(3, 'RUC'),
-(4, 'OTRO');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `documentoscliente`
---
 
 CREATE TABLE IF NOT EXISTS `documentoscliente` (
   `IDCLIENTE` int(11) NOT NULL,
@@ -120,19 +63,9 @@ CREATE TABLE IF NOT EXISTS `documentoscliente` (
   KEY `FK_IDDOCUMENTO` (`IDDOCUMENTO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `documentoscliente`
---
 
-INSERT INTO `documentoscliente` (`IDCLIENTE`, `IDDOCUMENTO`, `IDENTIFICADOR`) VALUES
-(1, 1, '47113327'),
-(1, 3, '10471133278');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `producto`
---
 
 CREATE TABLE IF NOT EXISTS `producto` (
   `CODIGO` int(11) NOT NULL,
@@ -146,14 +79,8 @@ CREATE TABLE IF NOT EXISTS `producto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO PRODUCTO (CODIGO,DESCRIPCION,ESPESOR,ANCHO,LARGO,UNIDAD) 
-VALUES(2225,'MADERA CAOBA',20,5,10,2);
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `rol`
---
 
 CREATE TABLE IF NOT EXISTS `rol` (
   `idRol` int(11) NOT NULL AUTO_INCREMENT,
@@ -161,22 +88,9 @@ CREATE TABLE IF NOT EXISTS `rol` (
   PRIMARY KEY (`idRol`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
---
--- Volcado de datos para la tabla `rol`
---
 
-INSERT INTO `rol` (`idRol`, `nombre`) VALUES
-(1, 'encargadoVentas'),
-(2, 'encargadoAlmacen'),
-(3, 'gerente'),
-(4, 'cajera'),
-(5, 'secretaria');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `unidad`
---
 
 CREATE TABLE IF NOT EXISTS `unidad` (
   `ID` int(11) NOT NULL,
@@ -184,20 +98,9 @@ CREATE TABLE IF NOT EXISTS `unidad` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `unidad`
---
 
-INSERT INTO `unidad` (`ID`, `UMEDIDA`) VALUES
-(1, 'CM'),
-(2, 'MTS'),
-(3, 'PIES');
 
--- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `usuario`
---
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
@@ -211,48 +114,95 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   KEY `idRol_2` (`idRol`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
---
--- Volcado de datos para la tabla `usuario`
---
 
-INSERT INTO `usuario` (`idUsuario`, `usuario`, `clave`, `estado`, `fechaCreacion`, `idRol`) VALUES
-(4, 'maycol', 'espinoza', 1, '2014-09-16', 1);
 
---
--- Restricciones para tablas volcadas
---
 
---
--- Filtros para la tabla `cotizacion`
---
+
+
 ALTER TABLE `cotizacion`
   ADD CONSTRAINT `FK_CLIENTE` FOREIGN KEY (`IDCLIENTE`) REFERENCES `cliente` (`ID`);
 
---
--- Filtros para la tabla `detallecotizacion`
---
+
 ALTER TABLE `detallecotizacion`
   ADD CONSTRAINT `FK_CODCOTIZACION` FOREIGN KEY (`CODCOTIZACION`) REFERENCES `cotizacion` (`CODIGO`);
 
---
--- Filtros para la tabla `documentoscliente`
---
+
 ALTER TABLE `documentoscliente`
   ADD CONSTRAINT `FK_IDCLIENTE` FOREIGN KEY (`IDCLIENTE`) REFERENCES `cliente` (`ID`),
   ADD CONSTRAINT `FK_IDDOCUMENTO` FOREIGN KEY (`IDDOCUMENTO`) REFERENCES `documento` (`ID`);
 
---
--- Filtros para la tabla `producto`
---
+
 ALTER TABLE `producto`
   ADD CONSTRAINT `FK_UNIDAD` FOREIGN KEY (`UNIDAD`) REFERENCES `unidad` (`ID`);
 
---
--- Filtros para la tabla `usuario`
---
+
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `rol` (`idRol`);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+select * from cliente;
+
+INSERT INTO `cliente` (`NOMBRE`, `APELLIDOS`, `DIRECCION`, `EMAIL`) VALUES
+( 'Maycol', 'Espinoza', 'Rimac', 'mher_91@hotmail.com'),
+( 'Melissa', 'Castro', 'Rimac', 'melissa@hotmail.com'),
+( 'Steve', 'Jobs', 'Luriwashigton', 'stevejobs@apple.com'),
+( 'Anonymouse', 'secreteo', 'Your home', 'anonymouse@hotmail.com'),
+( 'Anonymouse', 'secret', 'Your home', 'anonymouse@hotmail.com'),
+( 'Omar', 'Cuba', 'Your home', 'omar@hotmail.com'),
+( 'Antonio', 'Carrillo', 'Your home', 'antonio@hotmail.com');
+INSERT INTO `cotizacion` ( `FECHAREGISTRO`, `IMPORTETOTAL`, `IDCLIENTE`) VALUES
+('1991-12-14', 450, 1);
+select * from detallecotizacion;
+INSERT INTO DETALLECOTIZACION(CODIGO,DESCRIPCION,NRODEPIEZAS,PRECIO,IMPORTE,CODCOTIZACION) 
+VALUES('000024','MADERA CAOBA',10,2.5,25,1);
+INSERT INTO `documento` (`ID`, `TIPO`) VALUES
+(1, 'DNI'),
+(2, 'PASAPORTE'),
+(3, 'RUC'),
+(4, 'OTRO');
+
+INSERT INTO `documentoscliente` (`IDCLIENTE`, `IDDOCUMENTO`, `IDENTIFICADOR`) VALUES
+(1, 1, '47113327'),
+(1, 3, '10471133278'),
+(2, 1, '47113337'),
+(2, 3, '10471134278'),
+(3, 1, '47115527'),
+(3, 3, '10471166278'),
+(4, 1, '47113437'),
+(4, 3, '104711313278'),
+(5, 1, '47113312'),
+(5, 3, '10471133321')
+;
+INSERT INTO `unidad` (`ID`, `UMEDIDA`) VALUES
+(1, 'CM'),
+(2, 'MTS'),
+(3, 'PIES');
+
+INSERT INTO PRODUCTO (CODIGO,DESCRIPCION,ESPESOR,ANCHO,LARGO,UNIDAD) VALUES
+(2225,'MADERA CAOBA',20,5,10,2),
+(2226,'MADERA EBANO',12,5,10,2),
+(2227,'MADERA ALAMOS',11,5,10,2),
+(2228,'MADARA UCHIHA',10,5,10,2),
+(2229,'MADERA TEMPLE',29,5,10,2),
+(2230,'MADERA TORNILLO',10,5,10,2),
+(2231,'MADERA CLASE 1',10,5,10,2),
+(2232,'MADERA CLASE 2',10,5,10,2),
+(2233,'MADERA CLASE 3',10,5,10,2),
+(2234,'MADERA CLASE 4',10,5,10,2),
+(2235,'MADERA CLASE 5',10,5,10,2),
+(2236,'MADERA CLASE 6',10,5,10,2),
+(2237,'MADERA CLASE 7',10,5,10,2),
+(2238,'MADERA CLASE 8',10,5,10,2),
+(2239,'MADERA CLASE 9',10,5,10,2),
+(2240,'MADERA CLASE 10',10,5,10,2);
+
+INSERT INTO `rol` (`idRol`, `nombre`) VALUES
+(1, 'encargadoVentas'),
+(2, 'encargadoAlmacen'),
+(3, 'gerente'),
+(4, 'cajera'),
+(5, 'secretaria');
+
+
+
+INSERT INTO `usuario` (`idUsuario`, `usuario`, `clave`, `estado`, `fechaCreacion`, `idRol`) VALUES
+(4, 'maycol', 'espinoza', 1, '2014-09-16', 1);
