@@ -35,48 +35,12 @@
 		
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/vistas/menuAlmacen.xhtml</from-view-id>
+		<from-view-id>/vistas/*</from-view-id>
 		<navigation-case>
 			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/vistas/menuCajera.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>iniciarSesion</from-outcome>
-			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/vistas/menuGerente.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>iniciarSesion</from-outcome>
-			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/vistas/menuSecretaria.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>iniciarSesion</from-outcome>
-			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/vistas/menuVentas.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>iniciarSesion</from-outcome>
-			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>registrarCotizacion</from-outcome>
-			<to-view-id>/vistas/registrarCotizacion.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
+	
 </faces-config>
