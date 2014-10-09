@@ -38,6 +38,13 @@
    <PROCESS-ITEM-OUTPUT ID="iniciarSesion::#vistas#inicioSesion.xhtml"
     NAME="output" PATH="/vistas/inicioSesion.xhtml"
     TARGET="rules:#vistas#inicioSesion.xhtml" TITLE="iniciarSesion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="registrarCotizacion::#vistas#registrarCotizacion.xhtml"
+    NAME="output1" PATH="/vistas/registrarCotizacion.xhtml"
+    TARGET="rules:#vistas#registrarCotizacion.xhtml"
+    TITLE="registrarCotizacion" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#registrarCotizacion.xhtml"
+  PATH="/vistas/registrarCotizacion.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

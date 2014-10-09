@@ -41,6 +41,13 @@
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>registrarCotizacion</from-outcome>
+			<to-view-id>/vistas/registrarCotizacion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
+	
+	
 	
 </faces-config>
