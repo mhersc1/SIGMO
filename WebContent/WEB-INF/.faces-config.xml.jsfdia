@@ -20,14 +20,8 @@
    <PROCESS-ITEM-OUTPUT ID="menuAlmacen::#vistas#menuAlmacen.xhtml"
     NAME="output4" PATH="/vistas/menuAlmacen.xhtml"
     TARGET="rules:#vistas#menuAlmacen.xhtml" TITLE="menuAlmacen" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT
-    ID="usuarioNoExiste::#vistas#userNotExists.xhtml" NAME="output5"
-    PATH="/vistas/userNotExists.xhtml"
-    TARGET="rules:#vistas#userNotExists.xhtml" TITLE="usuarioNoExiste" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#vistas#userNotExists.xhtml"
-  PATH="/vistas/userNotExists.xhtml" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#vistas#menuGerente.xhtml"
   PATH="/vistas/menuGerente.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#vistas#menuGerente.xhtml:0" NAME="item"

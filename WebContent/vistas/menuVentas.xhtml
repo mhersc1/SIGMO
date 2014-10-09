@@ -3,27 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
 <h:head></h:head>
 <h:body>
 	<h:form id="form">
 		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-		<p:commandLink action="#{loginMB.cerrarSesion}">Cerrar Sesion</p:commandLink>
-		<p:menubar>
-			<p:submenu label="Cotizacion" icon="ui-icon-document">
-				<p:menuitem value="Registro" action="registrarCotizacion" />
-				<p:menuitem value="Listado" url="listar" />
-
-			</p:submenu>
-
-			<p:submenu label="Pedido" icon="ui-icon-pencil">
-				<p:menuitem value="Registro" url="'registrar" />
-				<p:menuitem value="Listado" url="listar" />
-			</p:submenu>
-
-
-		</p:menubar>
+		
+		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
+		<ui:include src="/vistas/includes/opcionesMenuVentas.xhtml"/>
+		
 	</h:form>
 </h:body>
 </html>

@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<p:menubar>
+		<p:submenu label="Proveedor" icon="ui-icon-document">
+			<p:submenu label="Orden de Pedido" icon="ui-icon-document">
+				<p:menuitem value="Generar" url="generar" />
+			</p:submenu>
+			<p:submenu label="Factura" icon="ui-icon-document">
+				<p:menuitem value="Registrar" url="registrar" />
+			</p:submenu>
+		</p:submenu>
+		<p:submenu label="Producto" icon="ui-icon-pencil">
+			<p:menuitem value="Actualizar precio" url="actualiza" />
+		</p:submenu>
+	</p:menubar>
+</ui:composition>

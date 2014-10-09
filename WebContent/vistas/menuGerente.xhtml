@@ -1,33 +1,17 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      >
-      <h:head></h:head>
-	<h:body>
-	
-	<h:form id="form">  
-    <p:commandLink action="#{loginMB.cerrarSesion}">Cerrar Sesion</p:commandLink>
-    <p:growl id="messages"/>
-    <p:menubar>
-        <p:submenu label="Proveedor" icon="ui-icon-document">
-            	<p:submenu label="Orden de Pedido" icon="ui-icon-document">
-                	<p:menuitem value="Generar" url="generar" />
-           		</p:submenu>
-           		<p:submenu label="Factura" icon="ui-icon-document">
-                	<p:menuitem value="Registrar" url="registrar" />
-           		</p:submenu>
-        </p:submenu>
- 
-        <p:submenu label="Producto" icon="ui-icon-pencil">
-            <p:menuitem value="Actualizar precio" url="actualiza"  />
-          
-        </p:submenu>
- 
-        
-    </p:menubar>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
+<h:head></h:head>
+<h:body>
+	<h:form id="form">
+		<p:growl id="messages" />
+		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
+		<ui:include src="/vistas/includes/opcionesMenuGerente.xhtml"/>
 	</h:form>
-	</h:body>
+</h:body>
 </html>

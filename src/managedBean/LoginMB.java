@@ -48,6 +48,7 @@ public class LoginMB implements Serializable{
 		
 		if(menu!=null){
 			//Sesion
+			usuarioForm.setRol(usuario.getRol().getNombre());
 			loggedIn = true;
 			HttpSession session = Util.getSession();
             session.setAttribute("username", usuario.getUsuario());

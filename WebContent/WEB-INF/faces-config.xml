@@ -31,11 +31,7 @@
 			<to-view-id>/vistas/menuAlmacen.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-		<navigation-case>
-			<from-outcome>usuarioNoExiste</from-outcome>
-			<to-view-id>/vistas/userNotExists.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
+		
 		
 	</navigation-rule>
 	<navigation-rule>
