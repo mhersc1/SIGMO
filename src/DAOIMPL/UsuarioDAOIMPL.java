@@ -1,5 +1,7 @@
 package DAOIMPL;
 
+import java.util.List;
+
 import hibernate.HibernateUtil;
 
 import org.hibernate.Query;
@@ -16,7 +18,7 @@ public class UsuarioDAOIMPL implements UsuarioDAO{
 		Session sesion=HibernateUtil.getSessionFactory().openSession();
 		Query query=sesion.createQuery("from Usuario u where u.usuario='"+usuario+"' and u.clave='"+clave+"'");
 		Usuario usuEncontrado;
-		if(query.list()!=null)
+		if(query.list().size()!=0)
 			usuEncontrado=(Usuario)query.list().get(0);
 		else
 			usuEncontrado=null;

@@ -5,6 +5,7 @@
 
 	<navigation-rule>
 		<from-view-id>/vistas/inicioSesion.xhtml</from-view-id>
+		
 		<navigation-case>
 			<from-outcome>menuSecretaria</from-outcome>
 			<to-view-id>/vistas/menuSecretaria.xhtml</to-view-id>
@@ -40,7 +41,7 @@
 	<navigation-rule>
 		<from-view-id>/vistas/menuAlmacen.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>inicioSesion</from-outcome>
+			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -48,7 +49,7 @@
 	<navigation-rule>
 		<from-view-id>/vistas/menuCajera.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>inicioSesion</from-outcome>
+			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -56,7 +57,7 @@
 	<navigation-rule>
 		<from-view-id>/vistas/menuGerente.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>inicioSesion</from-outcome>
+			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -64,7 +65,7 @@
 	<navigation-rule>
 		<from-view-id>/vistas/menuSecretaria.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>inicioSesion</from-outcome>
+			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
@@ -72,7 +73,7 @@
 	<navigation-rule>
 		<from-view-id>/vistas/menuVentas.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>inicioSesion</from-outcome>
+			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
