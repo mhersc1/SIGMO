@@ -87,8 +87,9 @@ public class CotizacionMB implements Serializable {
 	
 	/**
 	 * Functions CRUD
+	 * @throws Exception 
 	 */
-	public void registrarCotizacion() {
+	public void registrarCotizacion() throws Exception {
 		// Solo para los reportes se le agrega el DNI y la fecha actual al
 		// numero
 		// Cotizacion:

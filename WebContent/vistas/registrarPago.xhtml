@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<h:body>
+	<h:form>
+		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
+		<ui:include src="/vistas/includes/opcionesMenuCajera.xhtml" />
+	</h:form>
+	<p:panel header="Busqueda Cotizacion">
+
+		<h:panelGrid columns="3">
+			<p:outputLabel for="codCotizacion" value="Codigo :" />
+			<p:inputText id="codCotizacion" value="10202515" readonly="true" />
+			<p:commandButton value="Buscar" icon="ui-icon-search" />
+			<p:outputLabel value="Fecha: " />
+			<p:inputText value="20/05/1992" readonly="true" />
+		</h:panelGrid>
+	</p:panel>
+	<p:panel header="Orden de Pago">
+		<p:outputLabel value="ORDEN DE PAGO" />
+		<h:panelGrid columns="2">
+			<p:outputLabel for="codOrdenPago" value="Codigo :" />
+			<p:inputText id="codOrdenPago" value="00121515" readonly="true" />
+			<p:outputLabel value="Fecha : " />
+			<p:inputText value="#{pagoMB.fechaActual}" readonly="true">
+				<f:convertDateTime pattern="dd/mm/yyyy" />
+			</p:inputText>
+		</h:panelGrid>
+	</p:panel>
+</h:body>
+</html>
