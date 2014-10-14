@@ -49,8 +49,9 @@ public class PagoMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	PagoForm pagoForm;
 	Date fechaActual;
-	
-
+	String tipoPago;
+	List productosCotizacion;
+	List productosFiltrados;
 	@PostConstruct
 	public void init() {
 		pagoForm=new PagoForm();
@@ -87,5 +88,30 @@ public class PagoMB implements Serializable {
 	public void setFechaActual(Date fechaActual) {
 		this.fechaActual = fechaActual;
 	}
+
+	public String getTipoPago() {
+		return tipoPago;
+	}
+
+	public void setTipoPago(String tipoPago) {
+		this.tipoPago = tipoPago;
+	}
+
+	public List getProductosCotizacion() {
+		return productosCotizacion;
+	}
+
+	public void setProductosCotizacion(List productosCotizacion) {
+		this.productosCotizacion = productosCotizacion;
+	}
+
+	public List getProductosFiltrados() {
+		return productosFiltrados;
+	}
+
+	public void setProductosFiltrados(List productosFiltrados) {
+		this.productosFiltrados = productosFiltrados;
+	}
+	
 	
 }

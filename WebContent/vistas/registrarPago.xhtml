@@ -10,26 +10,65 @@
 		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
 		<ui:include src="/vistas/includes/opcionesMenuCajera.xhtml" />
 	</h:form>
-	<p:panel header="Busqueda Cotizacion">
 
-		<h:panelGrid columns="3">
-			<p:outputLabel for="codCotizacion" value="Codigo :" />
-			<p:inputText id="codCotizacion" value="10202515" readonly="true" />
-			<p:commandButton value="Buscar" icon="ui-icon-search" />
-			<p:outputLabel value="Fecha: " />
-			<p:inputText value="20/05/1992" readonly="true" />
-		</h:panelGrid>
-	</p:panel>
 	<p:panel header="Orden de Pago">
-		<p:outputLabel value="ORDEN DE PAGO" />
-		<h:panelGrid columns="2">
+
+		<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="7">
 			<p:outputLabel for="codOrdenPago" value="Codigo :" />
-			<p:inputText id="codOrdenPago" value="00121515" readonly="true" />
+			<p:inputText id="codOrdenPago" value="00121515" readonly="true" style="background-color:LightGray"/>
 			<p:outputLabel value="Fecha : " />
-			<p:inputText value="#{pagoMB.fechaActual}" readonly="true">
+			<p:inputText value="#{pagoMB.fechaActual}" readonly="true" style="background-color:LightGray">
 				<f:convertDateTime pattern="dd/mm/yyyy" />
 			</p:inputText>
+			<p:outputLabel for="tipoPago" value="Tipo de Pago:" />
+			<p:selectOneMenu id="tipoPago" value="#{pagoMB.tipoPago}">
+				<f:selectItem itemLabel="Boleta de Venta" itemValue="boleta" />
+				<f:selectItem itemLabel="Factura" itemValue="factura" />
+			</p:selectOneMenu>
+
+			
 		</h:panelGrid>
+		<p:panel header="Cotizacion">
+			<h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="7">
+				<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="7">
+					<p:outputLabel for="codCotizacion" value="Codigo :" />
+					<p:inputText id="codCotizacion" value="10202515" readonly="true" />
+					<p:commandButton value="Buscar" icon="ui-icon-search" />
+				</h:panelGrid>
+
+				<p:outputLabel for="cliente" value="Cliente: " />
+				<p:inputText id="cliente" value="Maycol Espinoza Viaticos"
+					readonly="true" style="background-color:LightGray"/>
+				<p:outputLabel for="fechaCotizacion" value="Fecha: " />
+				<p:inputText id="fechaCotizacion" value="20/05/1992" readonly="true"
+				style="background-color:LightGray" />
+
+			</h:panelGrid>
+			<p:dataTable id="productosCotizacion" var="prodCotizacion"
+				value="#{pagoMB.productosCotizacion}" emptyMessage="Productos no encontrados"
+				filteredValue="#{pagoMB.productosFiltrados}">
+				
+				<p:column filterBy="#{prodCotizacion.codigo}" headerText="Codigo">
+				</p:column>
+				<p:column filterBy="#{prodCotizacion.descripcion}"
+					headerText="Descripcion">
+					<h:outputText value="#{prodCotizacion.descripcion}" />
+				</p:column>
+				<p:column filterBy="#{prodCotizacion.cantidad}" headerText="Cantidad">
+				</p:column>
+				<p:column filterBy="#{prodCotizacion.monto}" headerText="Monto">
+				</p:column>
+			</p:dataTable>
+			<p:outputLabel for="totalMonto" value="Total Monto: " />
+			<p:inputText id="totalMonto" value="0.00"
+					readonly="true" style="background-color:LightGray"/>
+					<p:outputLabel for="montoIGV" value="Monto(IGV): " />
+			<p:inputText id="montoIGV" value="0.00"
+					readonly="true" style="background-color:LightGray"/>
+		</p:panel>
+		<p:commandButton value="Limpiar" />
+		<p:commandButton value="Registrar" />
 	</p:panel>
+	
 </h:body>
 </html>
