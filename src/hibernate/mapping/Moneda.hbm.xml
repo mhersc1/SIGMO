@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/10/2014 12:40:39 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="bean.Moneda" table="moneda" catalog="sigmo_desarrollo">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="umon" type="string">
+            <column name="UMON" length="10" not-null="true" />
+        </property>
+        <property name="umoneda" type="string">
+            <column name="UMONEDA" length="20" not-null="true" />
+        </property>
+        <set name="productos" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="MONEDA" />
+            </key>
+            <one-to-many class="bean.Producto" />
+        </set>
+    </class>
+</hibernate-mapping>

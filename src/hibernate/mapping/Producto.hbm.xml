@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 30/09/2014 08:29:07 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 18/10/2014 12:40:39 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="bean.Producto" table="producto" catalog="sigmo_desarrollo">
         <id name="codigo" type="int">
@@ -11,17 +11,14 @@
         <many-to-one name="unidad" class="bean.Unidad" fetch="select">
             <column name="UNIDAD" />
         </many-to-one>
-        <property name="espesor" type="java.lang.Integer">
-            <column name="ESPESOR" />
-        </property>
-        <property name="ancho" type="java.lang.Integer">
-            <column name="ANCHO" />
-        </property>
-        <property name="largo" type="java.lang.Integer">
-            <column name="LARGO" />
-        </property>
+        <many-to-one name="moneda" class="bean.Moneda" fetch="select">
+            <column name="MONEDA" />
+        </many-to-one>
         <property name="descripcion" type="string">
-            <column name="DESCRIPCION" length="60" />
+            <column name="DESCRIPCION" length="60" not-null="true" />
+        </property>
+        <property name="preciounit" type="big_decimal">
+            <column name="PRECIOUNIT" precision="10" />
         </property>
     </class>
 </hibernate-mapping>
