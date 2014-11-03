@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -60,6 +61,8 @@ public class CotizacionMB implements Serializable {
 	 */
 	private static final Log log = LogFactory.getLog(CotizacionMB.class);
 	
+	@ManagedProperty(value="#{message}")
+	private MessageBean message;
 	@PostConstruct
 	public void init() {
 		// TODO Auto-generated constructor stub
@@ -71,14 +74,18 @@ public class CotizacionMB implements Serializable {
 	
 	private void cleanup(){		
 		setCodigoCot(generarNumeroDeCotizacion());
-		setFechaRegistro(new Date());
-		setCliente(new Cliente());
+		setFechaRegistro(new Date());		
 		setImporteTotal(new BigDecimal("0.0"));
-		setDetallesCotizacion(new ArrayList<Detallecotizacion>());		
+		setDetallesCotizacion(new ArrayList<Detallecotizacion>());
+		cleanCliente();
+	}
+	public void cleanCliente(){
+		setCliente(new Cliente());
 		setDocumentosCliente(new ArrayList<String>(){{
 			add("");add("");			
-		}});		
+		}});
 	}
+	
 	@PreDestroy
 	public void rip(){
 		System.out.println("R.I.P");		
@@ -87,48 +94,72 @@ public class CotizacionMB implements Serializable {
 	
 	/**
 	 * Functions CRUD
-	 * @throws Exception 
 	 */
-	public void registrarCotizacion() throws Exception {
+	public void registrarCotizacion() {
 		// Solo para los reportes se le agrega el DNI y la fecha actual al
 		// numero
 		// Cotizacion:
-		
+		boolean flagC = false;
+		boolean flagP = false;
 		try {
 			CotizacionDAO cotDAO = new CotizacionDAOImpl();
 			DetallecotizacionDAO detCotDAO = new DetallecotizacionDAOImpl();
-			Cotizacion cot = new Cotizacion();		
-			cot.setCliente(getCliente());
-			cot.setFecharegistro(getFechaRegistro());
-			cot.setImportetotal(getImporteTotal());
-			cot.setCliente(getCliente());
-			cotDAO.saveOrUpdate(cot);
-			// DetalleCotizacion
-			for (Detallecotizacion det : getDetallesCotizacion()) {
-				det.setCotizacion(cot);
-				detCotDAO.saveOrUpdate(det);
+			List<Detallecotizacion> detalles=new ArrayList<Detallecotizacion>();
+			Cotizacion cot = new Cotizacion();
+
+			if (getCliente() != null && getCliente().getId() != null) {
+				if (getFechaRegistro() != null) {
+					cot.setCliente(getCliente());
+					cot.setFecharegistro(getFechaRegistro());
+					cot.setImportetotal(getImporteTotal());
+					flagC = true;
+				} else {
+					log.error("No se ingreso la fecha de registro. Is null");
+					message.showMessage(1);
+				}
+			} else {
+				log.error("No se encontro el cliente. Is null");
+				message.showMessage(2);
 			}
-			log.info("Es correcta la transaccion :EXITO:");
-			cleanup();					
+			
+			if (getDetallesCotizacion() != null) {
+				for (Detallecotizacion det : getDetallesCotizacion()) {
+					if (det != null && det.getCodigo() != null && flagC) {
+						det.setCotizacion(cot);
+						detalles.add(det);//Seran los detalles a grabar
+						flagP = true;
+					}
+				}
+				if(flagP==false){
+					 log.error("El detalle a registrar es nulo o vacio");
+					 message.showMessage(3);
+				}
+			} else {
+				log.error("Los detalles de la cotizacion es vacía");
+				message.showMessage(3);
+			}
+			
+			if (flagC && flagP) {//Registro de la cotizacion
+				cotDAO.saveOrUpdate(cot);
+				detCotDAO.saveOrUpdateList(detalles);
+				log.info("Se registro con exito la cotizacion.");
+				message.showMessage(4);
+				cleanup();				
+			} else {
+				log.info("No se registro la cotizacion.");
+				message.showMessage(5);
+			}			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.info("Fail!!");
 			e.printStackTrace();			
-			throw e;
 		}
-
 	}
 
 	/**
 	 * Basic Functions
-	 */
-	public void notificarRegistro(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        
-        context.addMessage(null, new FacesMessage("Successful",  "Your message: ") );
-        context.addMessage(null, new FacesMessage("Second Message", "Additional Message Detail"));
-	}
-	public void asignarCliente(Cliente cliente) {
+	 */	
+	public void asignarCliente(Cliente cliente) {		
 		this.setCliente(cliente);
 		cargarDocumentosCliente(cliente);
 	}
@@ -146,7 +177,10 @@ public class CotizacionMB implements Serializable {
 	public void asignarProducto(Producto producto) {
 		Detallecotizacion det = new Detallecotizacion();
 		det.setCodigo(String.valueOf(producto.getCodigo()));
-		det.setDescripcion(producto.getDescripcion());		
+		det.setDescripcion(producto.getDescripcion());
+		det.setNrodepiezas(1);
+		det.setPrecio(producto.getPreciounit());
+		det.setImporte(det.getPrecio());
 		this.detallesCotizacion.add(det);				
 	}
 
@@ -268,4 +302,9 @@ public class CotizacionMB implements Serializable {
 	public void setCodigoCot(String codigoCot) {
 		this.codigoCot = codigoCot;
 	}
+	
+	public void setMessage(MessageBean message) {
+		this.message = message;
+	}	
 }
+

@@ -98,12 +98,12 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 			throw re;
 		}
 	}
-
+	@Override
 	public Cotizacion findById(int id) {
+		Session session=sessionFactory.openSession();
 		log.debug("getting Cotizacion instance with id: " + id);
 		try {
-			Cotizacion instance = (Cotizacion) sessionFactory
-					.getCurrentSession().get("dao.impl.impl.Cotizacion", id);
+			Cotizacion instance = (Cotizacion) session.get("bean.Cotizacion", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {

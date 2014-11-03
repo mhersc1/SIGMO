@@ -1,5 +1,8 @@
 package DAO;
 
-public interface PagoDAO {
+import bean.Pago;
 
+public interface PagoDAO {
+	public String generarCorrelativoCodigoPago();
+	public void registrarPago(Pago pago);
 }

@@ -131,4 +131,23 @@ public class DetallecotizacionDAOImpl implements DetallecotizacionDAO{
 			throw re;
 		}
 	}
+
+	@Override
+	public void saveOrUpdateList(List<Detallecotizacion> detalles) {
+		// TODO Auto-generated method stub
+		log.debug("Grabando Detallecotizacion instance");
+		Session session=sessionFactory.openSession();
+		try {
+			session.getTransaction().begin();
+			for(Detallecotizacion det:detalles){
+			session.saveOrUpdate(det);
+			}
+			session.getTransaction().commit();
+			log.debug("Grabado successful");
+		} catch (RuntimeException re) {
+			log.error("Grabado failed", re);
+			session.getTransaction().rollback();
+			throw re;
+		}		
+	}
 }

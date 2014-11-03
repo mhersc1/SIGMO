@@ -13,78 +13,123 @@ public class Cliente implements java.io.Serializable {
 	private Integer id;
 	private String nombre;
 	private String apellidos;
+	private String razonSocial;
 	private String direccion;
 	private String email;
+	private Integer telefono1;
+	private Integer telefono2;
+	private String nroDocumento;
+	private Integer tipoDocumento;
+	private Integer tipoPersona;
 	private Set cotizacions = new HashSet(0);
 	private Set documentosclientes = new HashSet(0);
-
+	
+	
 	public Cliente() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
-
-	public Cliente(String nombre, String apellidos, String direccion,
-			String email, Set cotizacions, Set documentosclientes) {
+	public Cliente(Integer id, String nombre, String apellidos,
+			String razonSocial, String direccion, String email,
+			Integer telefono1, Integer telefono2, String nroDocumento,
+			Integer tipoDocumento, Integer tipoPersona, Set cotizacions,
+			Set documentosclientes) {
+		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
+		this.razonSocial = razonSocial;
 		this.direccion = direccion;
 		this.email = email;
+		this.telefono1 = telefono1;
+		this.telefono2 = telefono2;
+		this.nroDocumento = nroDocumento;
+		this.tipoDocumento = tipoDocumento;
+		this.tipoPersona = tipoPersona;
 		this.cotizacions = cotizacions;
 		this.documentosclientes = documentosclientes;
 	}
-
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public String getNombre() {
-		return this.nombre;
+		return nombre;
 	}
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
 	public String getApellidos() {
-		return this.apellidos;
+		return apellidos;
 	}
-
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-
-	public String getDireccion() {
-		return this.direccion;
+	public String getRazonSocial() {
+		return razonSocial;
 	}
-
+	public void setRazonSocial(String razonSocial) {
+		this.razonSocial = razonSocial;
+	}
+	public String getDireccion() {
+		return direccion;
+	}
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Set getCotizacions() {
-		return this.cotizacions;
+	public Integer getTelefono1() {
+		return telefono1;
 	}
-
+	public void setTelefono1(Integer telefono1) {
+		this.telefono1 = telefono1;
+	}
+	public Integer getTelefono2() {
+		return telefono2;
+	}
+	public void setTelefono2(Integer telefono2) {
+		this.telefono2 = telefono2;
+	}
+	public String getNroDocumento() {
+		return nroDocumento;
+	}
+	public void setNroDocumento(String nroDocumento) {
+		this.nroDocumento = nroDocumento;
+	}
+	public Integer getTipoDocumento() {
+		return tipoDocumento;
+	}
+	public void setTipoDocumento(Integer tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+	public Integer getTipoPersona() {
+		return tipoPersona;
+	}
+	public void setTipoPersona(Integer tipoPersona) {
+		this.tipoPersona = tipoPersona;
+	}
+	public Set getCotizacions() {
+		return cotizacions;
+	}
 	public void setCotizacions(Set cotizacions) {
 		this.cotizacions = cotizacions;
 	}
-
 	public Set getDocumentosclientes() {
-		return this.documentosclientes;
+		return documentosclientes;
 	}
-
 	public void setDocumentosclientes(Set documentosclientes) {
 		this.documentosclientes = documentosclientes;
 	}
-
+	public String getNombreCompleto(){
+		return this.nombre+" "+this.apellidos;
+	}
+	
+	
 }

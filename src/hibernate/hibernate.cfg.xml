@@ -17,6 +17,7 @@
 		<mapping resource="hibernate/mapping/Detallecotizacion.hbm.xml" />
 		<mapping resource="hibernate/mapping/Documento.hbm.xml" />
 		<mapping resource="hibernate/mapping/Documentoscliente.hbm.xml" />
+		<mapping resource="hibernate/mapping/Pago.hbm.xml" />
 		<mapping resource="hibernate/mapping/Producto.hbm.xml" />
 		<mapping resource="hibernate/mapping/Unidad.hbm.xml" />
 	</session-factory>

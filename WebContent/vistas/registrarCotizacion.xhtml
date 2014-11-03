@@ -1,133 +1,128 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	>
 <h:head />
 <h:body>
-	<h:form>
+	<h:outputScript library="js" name="cotizacion.js" target="head" />
+	<h:form>  
 		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
 		<ui:include src="/vistas/includes/opcionesMenuVentas.xhtml"/>
 	</h:form>
 	<p:tabView id="tabs">
-		<p:tab id="registrarCotizacion" title="Registrar Cotizacion">		
+		<p:tab id="registrarCotizacion" title="Registrar Cotizacion">	
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Codigo (Correlativo) :" />
 				<p:inputText value="#{cotMB.codigoCot}" readonly="true" />
 				<p:outputLabel value="Fecha : " />
 				<p:calendar showOn="button" value="#{cotMB.fechaRegistro}" />
 			</h:panelGrid>
-			<p:fieldset id="dataCliente" legend="Datos del Cliente">
-				<p:commandButton value="Buscar Cliente"
-					onclick="PF('dlgClientes').show();" />
-				<br />
-				<h:form id="clienteForm">
-					<h:panelGrid columns="6">
-						<h:column>
-							<p:outputLabel id="nombre" value="Nombres :" />
-							<br />
-							<p:outputLabel id="apellidos" value="Apellidos :" />
-						</h:column>
-						<h:column>
-							<p:inputText for="nombre" value="#{cotMB.cliente.nombre}"
-								readonly="true" />
-							<br />
-							<p:inputText for="apellidos" value="#{cotMB.cliente.apellidos}"
-								readonly="true" />
-						</h:column>
-						<h:column>
-							<p:outputLabel id="correo" value="E-mail :" />
-							<br />
-							<p:outputLabel id="direccion" value="Direccion:" />
-						</h:column>
-						<h:column>
-							<p:inputText for="correo" value="#{cotMB.cliente.email}"
-								readonly="true" />
-							<br />
-							<p:inputText for="direccion" value="#{cotMB.cliente.direccion}"
-								readonly="true" />
-						</h:column>
-						<h:column>
-							<p:outputLabel id="dni" value="DNI  :" />
-							<br />
-							<p:outputLabel id="ruc" value="RUC :" />
-						</h:column>
-						<h:column>
-							<p:inputText for="dni" value="#{cotMB.documentosCliente[0]}"
-								readonly="true" />
-							<br />
-							<p:inputText for="ruc" value="#{cotMB.documentosCliente[1]}"
-								readonly="true" />
-						</h:column>
-					</h:panelGrid>
-				</h:form>
-			</p:fieldset>
 			<br />
+			<p:commandButton value="Buscar Cliente"
+					onclick="PF('dlgClientes').show();habilitarCliente(true);" />
+			<p:commandButton value="Nuevo Cliente" action="#{cotMB.cleanCliente()}" onclick="limpiarCliente();"/>
+			<br />									
+			<h:form id="clienteForm">
+			<p:fieldset id="dataCliente" legend="Datos del Cliente">				
+					<h:panelGrid columns="2">
+						<h:column>
+							<p:outputLabel id="nombre" value="Nombres "/><br />
+						</h:column>
+						<h:column>
+							<p:inputText id="nombresCliente" for="nombre" value="#{cotMB.cliente.nombre} #{cotMB.cliente.apellidos}"
+								 required="true" readonly="true" style="width:500px"/>
+							<p:watermark for="nombresCliente"  value="Ingrese nombres y apellidos del cliente" />
+						</h:column>
+					</h:panelGrid>				
+			</p:fieldset>
+			<p:fieldset id="dataAdicional" legend="Datos adicionales">
+					<h:panelGrid columns="4">
+						<h:column>
+							<p:outputLabel id="correo" value="E-mail " /><br />
+							<p:outputLabel id="direccion" value="Direccion " />
+						</h:column>
+						<h:column>
+							<p:inputText id="correoCliente" for="correo" value="#{cotMB.cliente.email}"
+								readonly="true" /><br />
+							<p:inputText id="direccionCliente" for="direccion" value="#{cotMB.cliente.direccion}"
+								readonly="true" />
+						</h:column>
+						<h:column>
+							<p:outputLabel id="dni" value="DNI  " /><br />							
+							<p:outputLabel id="ruc" value="RUC  " />
+						</h:column>
+						<h:column>
+							<p:inputText id="dniCliente" for="dni" value="#{cotMB.documentosCliente[0]}"
+								readonly="true" required="true"/><br />							
+							<p:inputText id="rucCliente" for="ruc" value="#{cotMB.documentosCliente[1]}"
+								readonly="true" required="true"/>
+						</h:column>
+					</h:panelGrid>			
+			</p:fieldset>
+			</h:form>			
 			<p:fieldset legend="Listado de Productos">				
 				<p:commandButton value="Agregar Producto"
 					onclick="PF('dlgProductos').show();" type="button"/>
-				<br />
-				<br />
-				<h:form id="productoForm">				
-					<p:dataTable id="productos" var="detalle"
-						value="#{cotMB.detallesCotizacion}"
-						emptyMessage="Productos no seleccionados"
-						sortBy="#{detalle.descripcion}">
-						<p:column headerText="Codigo" style="text-align:center">
-							<h:outputText value="#{detalle.codigo}" />
+				<h:form id="productoForm">
+					<p:growl id="msgs" showDetail="true"/>
+					<p:dataTable id="productos"	var="detalle"	value="#{cotMB.detallesCotizacion}"
+								emptyMessage="Productos no seleccionados"	editable="true"	editMode="cell" >
+						<f:facet name="header">
+							Listado de Productos
+						</f:facet>						
+						<p:ajax event="cellEdit" update=":tabs:productoForm:msgs"/>
+						<p:column headerText="Codigo" 		style="text-align:center;">
+								<h:outputText value="#{detalle.codigo}" />
 						</p:column>
-						<p:column headerText="Descripcion" style="text-align:center">
-							<h:outputText value="#{detalle.descripcion}" />
+						<p:column headerText="Descripcion" 	style="text-align:center;">
+								<h:outputText value="#{detalle.descripcion}" />
 						</p:column>
-						<p:column headerText="N de piezas" style="text-align:center">
-							<h:inputText value="#{detalle.nrodepiezas}" id="watermark1"
-								style="text-align:right"
-								valueChangeListener="#{detalle.calcularImporteEnFuncionDeNroDePiezas}">
-								<p:ajax event="blur" update="importe,importeTotal" />
-							</h:inputText>
-							<p:watermark for="watermark1" value="Ingrese # de piezas" />
+						<p:column headerText="N de piezas" 	style="text-align:center;">
+							<p:cellEditor>
+								<f:facet name="output"><h:outputText value="#{detalle.nrodepiezas}" /></f:facet>
+								<f:facet name="input">
+									<p:inputText id="nrodePiezasInput" value="#{detalle.nrodepiezas}" 
+												valueChangeListener="#{detalle.calcularImporteEnFuncionDeNroDePiezas}" style="text-align:center;" 
+												label="N de piezas" required="true">
+										<f:convertNumber integerOnly="true" type="number"/>
+										<f:validateLongRange minimum="1" maximum="10000"/>
+										<p:ajax event="blur" update="productos"/>
+									</p:inputText>
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Precio c/u" style="text-align:center">
-							<h:inputText value="#{detalle.precio}" id="watermark2"
-								style="text-align:right"
-								valueChangeListener="#{detalle.calcularImporteEnFuncionDePrecioUnit}">
-								<p:ajax event="blur" update="importe,importeTotal" />
-							</h:inputText>
-							<p:watermark for="watermark2" value="Ingrese precio unit." />
+						<p:column headerText="Precio c/u"	style="text-align:center;">
+								<h:outputText value="#{detalle.precio}">
+									<f:convertNumber currencySymbol="S/ " type="currency" minFractionDigits="2"/>
+								</h:outputText>
 						</p:column>
-						<p:column headerText="Importe" style="text-align:center">
-							<h:outputText id="importe" value="#{detalle.importe}" />
+						<p:column headerText="Importe"	style="text-align:center;">
+								<h:outputText value="#{detalle.importe}">
+									<f:convertNumber currencySymbol="S/ " type="currency" minFractionDigits="2"/>
+								</h:outputText>
 						</p:column>
-						<p:column headerText="Eliminar" style="text-align:center">
-							<p:commandButton value="X"
-								action="#{cotMB.quitarDetalle(detalle)}" update="productos" />
+						<p:column headerText="Eliminar"		style="text-align:center;">
+							<p:commandButton value="x"	action="#{cotMB.quitarDetalle(detalle)}" update="productos" />
 						</p:column>
-						<p:summaryRow>
-							<p:column colspan="4" style="text-align:right">
-								<h:outputText value="Importe Total" />
-							</p:column>
-							<p:column>
-								<h:outputText id="importeTotal"
-									value="#{cotMB.calcularImporteTotal()}"
-									style="font-weight:bold" />
-							</p:column>
-						</p:summaryRow>
-					</p:dataTable>
+						<f:facet name="footer">
+							Monto Total
+							<h:outputLabel value="#{cotMB.calcularImporteTotal()}">
+								<f:convertNumber currencySymbol="S/ " type="currency" minFractionDigits="2"/>
+							</h:outputLabel>
+						</f:facet>
+					</p:dataTable>							
 				</h:form>
 			</p:fieldset>
-			<br />
-			<p:commandButton value="Registrar Cotizacion"
-				action="registrarCotizacion"
-				actionListener="#{cotMB.registrarCotizacion()}"
-				delay="3000"
-				onstart="PF('bar1').show();"			
-				oncomplete="PF('bar1').hide();PF('bar2').hide();"
-				onerror="PF('bar2').show();"								
-				update="@all">					
-			</p:commandButton>			
-			<p:button value="Imprimir" />
+			<h:form>
+				<p:growl id="growlProducto" showDetail="true" life="4000"/>			
+				<p:commandButton value="Registrar Cotizacion"															
+					actionListener="#{cotMB.registrarCotizacion()}"					
+					update="@all">																																
+				</p:commandButton>
+			</h:form>
 		</p:tab>
 		<p:tab id="listadoCotizacion" title="Listado de Cotizaciones" />
 	</p:tabView>
@@ -136,7 +131,7 @@
 			modal="true">
 			<p:dataTable id="busquedaclientes" var="cliente"
 				rows="#{cotMB.clientes.size()}" value="#{cotMB.clientes}"
-				emptyMessage="Clientes no encontrados"
+				emptyMessage="Cliente(s) no encontrado(s)"
 				filteredValue="#{cotMB.filteredClientes}">
 				<p:column filterBy="#{cliente.nombre}" headerText="Nombre"
 					filterMatchMode="contains">
@@ -165,15 +160,18 @@
 			modal="true" >			
 			<p:dataTable id="busquedaproductos" var="producto"
 				value="#{cotMB.productosL}" emptyMessage="Productos no encontrados"
-				filteredValue="#{cotMB.filteredProductos}">
-				<p:column filterBy="#{producto.codigo}" headerText="Codigo">
+				filteredValue="#{cotMB.filteredProductos}" scrollable="true" scrollHeight="150">
+				<p:column filterBy="#{producto.codigo}" headerText="Codigo" style="text-align:center">
 					<h:outputText value="#{producto.codigo}" />
 				</p:column>
 				<p:column filterBy="#{producto.descripcion}"
-					headerText="Descripcion">
+					headerText="Descripcion" style="text-align:center">
 					<h:outputText value="#{producto.descripcion}" />
 				</p:column>
-				<p:column headerText="Seleccionar Producto">
+				<p:column headerText="Precio Unitario" style="text-align:center">
+					<h:outputText value="S/#{producto.preciounit}" />
+				</p:column>
+				<p:column headerText="Seleccionar Producto" style="text-align:center">
 					<p:commandButton value="Seleccionar" 
 						actionListener="#{cotMB.asignarProducto(producto)}"
 						onclick="PF('dlgProductos').close();"						
@@ -181,7 +179,7 @@
 				</p:column>
 			</p:dataTable>			
 		</p:dialog>
-	</h:form>		
+	</h:form>
 </h:body>
 <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar1" effectSpeed="slow">
     <h:outputText value="Se registro con exito la cotizacion!" style="font-size:36px;" />    

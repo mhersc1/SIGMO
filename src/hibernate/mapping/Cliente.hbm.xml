@@ -8,17 +8,35 @@
             <column name="ID" />
             <generator class="identity" />
         </id>
-        <property name="nombre" type="string">
+        <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" length="30" />
         </property>
-        <property name="apellidos" type="string">
+        <property name="apellidos" type="java.lang.String">
             <column name="APELLIDOS" length="30" />
         </property>
-        <property name="direccion" type="string">
+        <property name="direccion" type="java.lang.String">
             <column name="DIRECCION" length="100" />
         </property>
-        <property name="email" type="string">
-            <column name="EMAIL" length="30" />
+        <property name="email" type="java.lang.String">
+            <column name="email" length="30" />
+        </property>
+        <property name="razonSocial" type="java.lang.String">
+            <column name="razonSocial" length="100" />
+        </property>
+        <property name="telefono1" type="java.lang.String">
+            <column name="telefono1" length="13" />
+        </property>
+        <property name="telefono2" type="java.lang.String">
+            <column name="telefono2" length="13" />
+        </property>
+        <property name="nroDocumento" type="java.lang.String">
+            <column name="NRODOCUMENTO" length="20" />
+        </property>
+        <property name="tipoDocumento" type="java.lang.Integer">
+            <column name="tipoDocumento"  />
+        </property>
+        <property name="tipoPersona" type="java.lang.Integer">
+            <column name="tipoPersona" />
         </property>
         <set name="cotizacions" table="cotizacion" inverse="true" lazy="true" fetch="select">
             <key>
