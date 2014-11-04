@@ -51,6 +51,11 @@
 			<to-view-id>/vistas/registrarPago.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>registrarPedido</from-outcome>
+			<to-view-id>/vistas/registrarPedido.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 	
 	

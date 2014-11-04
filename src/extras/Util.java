@@ -35,4 +35,30 @@ public class Util {
         else
             return null;
       }
+      public static String darFormatoNroCotizacion(String correlativo){
+  		/**
+  		 * @formatNumber 	<RUC><FechaActual><correlativo>
+  		 * 					10471113321814121991000001
+  		 */
+  		/**
+  		 * @formatNumber 	<correlativo> //Hasta 6 digitos
+  		 * 					000001
+  		 */
+  		String correl="";
+  		int tam=(""+correlativo).length();
+  		for (int i = 0; i < (6-tam); i++) {
+  			correl += "0";
+  		}
+  		return correl+correlativo;
+  	}
+      public static String obtenerNroCotizacionDeFormato(String nroFormateado){
+    		
+    		int contadorCeros=0;
+    		int tam=(nroFormateado).length();
+    		for (int i = 0; i < (6-tam); i++) {
+    			if(nroFormateado.charAt(i)=='0')
+    				contadorCeros++;
+    		}
+    		return nroFormateado.substring(contadorCeros);
+    	}
 }

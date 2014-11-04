@@ -8,11 +8,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,17 +18,14 @@ import org.apache.commons.logging.LogFactory;
 import DAO.ClienteDAO;
 import DAO.CotizacionDAO;
 import DAO.DetallecotizacionDAO;
-import DAO.DocumentosclienteDAO;
 import DAO.ProductoDAO;
 import DAOIMPL.ClienteDAOImpl;
 import DAOIMPL.CotizacionDAOImpl;
 import DAOIMPL.DetallecotizacionDAOImpl;
-import DAOIMPL.DocumentosclienteDAOImpl;
 import DAOIMPL.ProductoDAOImpl;
 import bean.Cliente;
 import bean.Cotizacion;
 import bean.Detallecotizacion;
-import bean.Documentoscliente;
 import bean.Producto;
 
 @ManagedBean(name = "cotMB")
@@ -44,16 +39,11 @@ public class CotizacionMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String codigoCot;
 	private Date fechaRegistro;
-	private Cliente cliente;
-	private List<String> documentosCliente;
 	private List<Detallecotizacion> detallesCotizacion;
 	private BigDecimal importeTotal;
 	/**
 	 * Filtros ***
 	 */
-	private List<Cliente> clientes;
-	private List<Cliente> filteredClientes;
-
 	private List<Producto> productosL;
 	private List<Producto> filteredProductos;
 	/**
@@ -61,29 +51,24 @@ public class CotizacionMB implements Serializable {
 	 */
 	private static final Log log = LogFactory.getLog(CotizacionMB.class);
 	
+	@ManagedProperty(value="#{clientMB}")
+	private ClienteMB clienteMB;
 	@ManagedProperty(value="#{message}")
 	private MessageBean message;
 	@PostConstruct
 	public void init() {
 		// TODO Auto-generated constructor stub
-		cleanup();
-		// Loading ...		
-		setClientes(cargarClientes());
+		clean();
+		// Loading ...
 		setProductosL(cargarProductos());
 	}
 	
-	private void cleanup(){		
+	private void clean(){		
 		setCodigoCot(generarNumeroDeCotizacion());
 		setFechaRegistro(new Date());		
 		setImporteTotal(new BigDecimal("0.0"));
 		setDetallesCotizacion(new ArrayList<Detallecotizacion>());
-		cleanCliente();
-	}
-	public void cleanCliente(){
-		setCliente(new Cliente());
-		setDocumentosCliente(new ArrayList<String>(){{
-			add("");add("");			
-		}});
+		clienteMB.clean();
 	}
 	
 	@PreDestroy
@@ -106,10 +91,10 @@ public class CotizacionMB implements Serializable {
 			DetallecotizacionDAO detCotDAO = new DetallecotizacionDAOImpl();
 			List<Detallecotizacion> detalles=new ArrayList<Detallecotizacion>();
 			Cotizacion cot = new Cotizacion();
-
-			if (getCliente() != null && getCliente().getId() != null) {
+			Cliente cliente = clienteMB.getCliente();
+			if (cliente != null && cliente.getId() != null) {
 				if (getFechaRegistro() != null) {
-					cot.setCliente(getCliente());
+					cot.setCliente(cliente);
 					cot.setFecharegistro(getFechaRegistro());
 					cot.setImportetotal(getImporteTotal());
 					flagC = true;
@@ -144,7 +129,7 @@ public class CotizacionMB implements Serializable {
 				detCotDAO.saveOrUpdateList(detalles);
 				log.info("Se registro con exito la cotizacion.");
 				message.showMessage(4);
-				cleanup();				
+				clean();				
 			} else {
 				log.info("No se registro la cotizacion.");
 				message.showMessage(5);
@@ -159,21 +144,6 @@ public class CotizacionMB implements Serializable {
 	/**
 	 * Basic Functions
 	 */	
-	public void asignarCliente(Cliente cliente) {		
-		this.setCliente(cliente);
-		cargarDocumentosCliente(cliente);
-	}
-
-	private void cargarDocumentosCliente(Cliente cliente) {
-		DocumentosclienteDAO documentosDAO = new DocumentosclienteDAOImpl();
-		List<String> lista = new ArrayList<String>();
-		for (Documentoscliente doc : documentosDAO
-				.cargarDocumentosCliente(cliente)) {
-			lista.add(doc.getIdentificador());
-		}
-		this.setDocumentosCliente(lista);
-	}
-
 	public void asignarProducto(Producto producto) {
 		Detallecotizacion det = new Detallecotizacion();
 		det.setCodigo(String.valueOf(producto.getCodigo()));
@@ -222,47 +192,15 @@ public class CotizacionMB implements Serializable {
 		productos = productoDAO.findAll();
 		return productos;
 	}
-
-	public List<Cliente> getFilteredClientes() {
-		return filteredClientes;
-	}
-
-	public void setFilteredClientes(List<Cliente> filteredClientes) {
-		this.filteredClientes = filteredClientes;
-	}
-
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
-	public List<Producto> getProductosL() {
-		return productosL;
-	}
-
+	
 	public void setProductosL(List<Producto> productosL) {
 		this.productosL = productosL;
 	}
-
-	public List<Producto> getFilteredProductos() {
-		return filteredProductos;
-	}
-
+	
 	public void setFilteredProductos(List<Producto> filteredProductos) {
 		this.filteredProductos = filteredProductos;
 	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
+	
 	public BigDecimal getImporteTotal() {
 		return importeTotal;
 	}
@@ -286,25 +224,36 @@ public class CotizacionMB implements Serializable {
 	public void setDetallesCotizacion(List<Detallecotizacion> detallesCotizacion) {
 		this.detallesCotizacion = detallesCotizacion;
 	}
-
-	public List<String> getDocumentosCliente() {
-		return documentosCliente;
-	}
-
-	public void setDocumentosCliente(List<String> documentosCliente) {
-		this.documentosCliente = documentosCliente;
-	}
-
-	public String getCodigoCot() {
-		return codigoCot;
-	}
-
+	
 	public void setCodigoCot(String codigoCot) {
 		this.codigoCot = codigoCot;
+	}
+	public String getCodigoCot() {
+		return codigoCot;
 	}
 	
 	public void setMessage(MessageBean message) {
 		this.message = message;
+	}
+
+	public List<Producto> getProductosL() {
+		return productosL;
+	}
+
+	public List<Producto> getFilteredProductos() {
+		return filteredProductos;
+	}
+
+	public MessageBean getMessage() {
+		return message;
+	}
+
+	public ClienteMB getClienteMB() {
+		return clienteMB;
+	}
+
+	public void setClienteMB(ClienteMB clienteMB) {
+		this.clienteMB = clienteMB;
 	}	
 }
 

@@ -14,9 +14,11 @@
 		<mapping resource="hibernate/mapping/Usuario.hbm.xml" />
 		<mapping resource="hibernate/mapping/Cliente.hbm.xml" />
 		<mapping resource="hibernate/mapping/Cotizacion.hbm.xml" />
+		<mapping resource="hibernate/mapping/Pedido.hbm.xml" />
 		<mapping resource="hibernate/mapping/Detallecotizacion.hbm.xml" />
 		<mapping resource="hibernate/mapping/Documento.hbm.xml" />
 		<mapping resource="hibernate/mapping/Documentoscliente.hbm.xml" />
+		<mapping resource="hibernate/mapping/Pago.hbm.xml" />
 		<mapping resource="hibernate/mapping/Producto.hbm.xml" />
 		<mapping resource="hibernate/mapping/Unidad.hbm.xml" />
 		<mapping resource="hibernate/mapping/Moneda.hbm.xml" />

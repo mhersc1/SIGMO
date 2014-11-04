@@ -1,4 +1,5 @@
 package hibernate;
+import org.apache.catalina.ssi.SSIConfig;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
 
@@ -16,12 +17,14 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
-            sessionFactory = new AnnotationConfiguration().configure("/hibernate/hibernate.cfg.xml").buildSessionFactory();
+
+        	sessionFactory = new AnnotationConfiguration().configure("/hibernate/hibernate.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
             // Log the exception. 
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
-        }
+        } finally {
+		}
     }
     
     public static SessionFactory getSessionFactory() {

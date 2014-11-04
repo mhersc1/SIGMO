@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html	
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -12,7 +13,7 @@
 		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
 		<ui:include src="/vistas/includes/opcionesMenuVentas.xhtml"/>
 	</h:form>
-	<p:tabView id="tabs">
+	<p:tabView id="tabs" widgetVar="registro_cotizacion">
 		<p:tab id="registrarCotizacion" title="Registrar Cotizacion">	
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Codigo (Correlativo) :" />
@@ -21,59 +22,21 @@
 				<p:calendar showOn="button" value="#{cotMB.fechaRegistro}" />
 			</h:panelGrid>
 			<br />
-			<p:commandButton value="Buscar Cliente"
-					onclick="PF('dlgClientes').show();habilitarCliente(true);" />
-			<p:commandButton value="Nuevo Cliente" action="#{cotMB.cleanCliente()}" onclick="limpiarCliente();"/>
-			<br />									
-			<h:form id="clienteForm">
-			<p:fieldset id="dataCliente" legend="Datos del Cliente">				
-					<h:panelGrid columns="2">
-						<h:column>
-							<p:outputLabel id="nombre" value="Nombres "/><br />
-						</h:column>
-						<h:column>
-							<p:inputText id="nombresCliente" for="nombre" value="#{cotMB.cliente.nombre} #{cotMB.cliente.apellidos}"
-								 required="true" readonly="true" style="width:500px"/>
-							<p:watermark for="nombresCliente"  value="Ingrese nombres y apellidos del cliente" />
-						</h:column>
-					</h:panelGrid>				
-			</p:fieldset>
-			<p:fieldset id="dataAdicional" legend="Datos adicionales">
-					<h:panelGrid columns="4">
-						<h:column>
-							<p:outputLabel id="correo" value="E-mail " /><br />
-							<p:outputLabel id="direccion" value="Direccion " />
-						</h:column>
-						<h:column>
-							<p:inputText id="correoCliente" for="correo" value="#{cotMB.cliente.email}"
-								readonly="true" /><br />
-							<p:inputText id="direccionCliente" for="direccion" value="#{cotMB.cliente.direccion}"
-								readonly="true" />
-						</h:column>
-						<h:column>
-							<p:outputLabel id="dni" value="DNI  " /><br />							
-							<p:outputLabel id="ruc" value="RUC  " />
-						</h:column>
-						<h:column>
-							<p:inputText id="dniCliente" for="dni" value="#{cotMB.documentosCliente[0]}"
-								readonly="true" required="true"/><br />							
-							<p:inputText id="rucCliente" for="ruc" value="#{cotMB.documentosCliente[1]}"
-								readonly="true" required="true"/>
-						</h:column>
-					</h:panelGrid>			
-			</p:fieldset>
-			</h:form>			
-			<p:fieldset legend="Listado de Productos">				
+			<p:panel id="panelCliente" header="Datos del Cliente">
+			<ui:decorate template="/vistas/includes/busquedaCliente.xhtml" />
+			</p:panel>
+			<p:panel header="Listado de Productos">			
+							
 				<p:commandButton value="Agregar Producto"
 					onclick="PF('dlgProductos').show();" type="button"/>
 				<h:form id="productoForm">
-					<p:growl id="msgs" showDetail="true"/>
+					<p:growl id="msgs" showDetail="true" widgetVar="msgs"/>
 					<p:dataTable id="productos"	var="detalle"	value="#{cotMB.detallesCotizacion}"
-								emptyMessage="Productos no seleccionados"	editable="true"	editMode="cell" >
+								emptyMessage="Productos no seleccionados"	editable="true"	editMode="cell" widgetVar="productos">
 						<f:facet name="header">
 							Listado de Productos
 						</f:facet>						
-						<p:ajax event="cellEdit" update=":tabs:productoForm:msgs"/>
+						<p:ajax event="cellEdit" update="@widgetVar(msgs)"/>
 						<p:column headerText="Codigo" 		style="text-align:center;">
 								<h:outputText value="#{detalle.codigo}" />
 						</p:column>
@@ -109,52 +72,21 @@
 						</p:column>
 						<f:facet name="footer">
 							Monto Total
-							<h:outputLabel value="#{cotMB.calcularImporteTotal()}">
+							<p:outputLabel value="#{cotMB.calcularImporteTotal()}">
 								<f:convertNumber currencySymbol="S/ " type="currency" minFractionDigits="2"/>
-							</h:outputLabel>
+							</p:outputLabel>
 						</f:facet>
 					</p:dataTable>							
 				</h:form>
-			</p:fieldset>
-			<h:form>
-				<p:growl id="growlProducto" showDetail="true" life="4000"/>			
+			
+			</p:panel>
 				<p:commandButton value="Registrar Cotizacion"															
 					actionListener="#{cotMB.registrarCotizacion()}"					
-					update="@all">																																
+					update="@widgetVar(registro_cotizacion)">																																
 				</p:commandButton>
-			</h:form>
 		</p:tab>
 		<p:tab id="listadoCotizacion" title="Listado de Cotizaciones" />
-	</p:tabView>
-	<h:form id="dialogClientes">
-		<p:dialog header="Busqueda Clientes" widgetVar="dlgClientes"
-			modal="true">
-			<p:dataTable id="busquedaclientes" var="cliente"
-				rows="#{cotMB.clientes.size()}" value="#{cotMB.clientes}"
-				emptyMessage="Cliente(s) no encontrado(s)"
-				filteredValue="#{cotMB.filteredClientes}">
-				<p:column filterBy="#{cliente.nombre}" headerText="Nombre"
-					filterMatchMode="contains">
-					<h:outputText value="#{cliente.nombre}" />
-				</p:column>
-				<p:column filterBy="#{cliente.apellidos}" headerText="Apellidos">
-					<h:outputText value="#{cliente.apellidos}" />
-				</p:column>
-				<p:column filterBy="#{cliente.direccion}" headerText="DNI/RUC">
-					<h:outputText value="#{cliente.direccion}" />
-				</p:column>
-				<p:column filterBy="#{cliente.email}" headerText="e-mail">
-					<h:outputText value="#{cliente.email}" />
-				</p:column>
-				<p:column headerText="Seleccionar Cliente">
-					<p:commandButton value="Seleccionar"
-						actionListener="#{cotMB.asignarCliente(cliente)}"
-						onclick="PF('dlgClientes').close();"
-						update=":tabs:clienteForm" />
-				</p:column>
-			</p:dataTable>
-		</p:dialog>
-	</h:form>
+	</p:tabView>	
 	<h:form id="dialogProductos">	
 	<p:dialog header="Busqueda Productos" widgetVar="dlgProductos"
 			modal="true" >			
@@ -175,16 +107,10 @@
 					<p:commandButton value="Seleccionar" 
 						actionListener="#{cotMB.asignarProducto(producto)}"
 						onclick="PF('dlgProductos').close();"						
-						update=":tabs:productoForm:productos" />
+						update="@widgetVar(productos)" />
 				</p:column>
 			</p:dataTable>			
 		</p:dialog>
 	</h:form>
 </h:body>
-<p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar1" effectSpeed="slow">
-    <h:outputText value="Se registro con exito la cotizacion!" style="font-size:36px;" />    
-</p:notificationBar>
-<p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="bar2" effectSpeed="slow" >    
-    <h:outputText value="Hubo algun error. Intentelo nuevamente!" style="font-size:36px;" />
-</p:notificationBar>
 </html>

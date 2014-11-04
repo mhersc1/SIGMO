@@ -14,17 +14,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
-import DAO.CotizacionDAO;
-import bean.Cotizacion;
+import DAO.PedidoDAO;
+import bean.Pedido;
 
 /**
- * Home object for domain model class Cotizacion.
- * @see dao.impl.impl.Cotizacion
+ * Home object for domain model class Pedido.
+ * @see dao.impl.impl.Pedido
  * @author Hibernate Tools
  */
-public class CotizacionDAOImpl implements CotizacionDAO {
+public class PedidoDAOImpl implements PedidoDAO {
 
-	private static final Log log = LogFactory.getLog(CotizacionDAOImpl.class);
+	private static final Log log = LogFactory.getLog(PedidoDAOImpl.class);
 
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
@@ -39,8 +39,8 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}*/
 
-	public void persist(Cotizacion transientInstance) {
-		log.debug("persisting Cotizacion instance");
+	public void persist(Pedido transientInstance) {
+		log.debug("persisting Pedido instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -50,8 +50,8 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}
 
-	public void saveOrUpdate(Cotizacion instance) {
-		log.debug("Grabando Cotizacion instance");
+	public void saveOrUpdate(Pedido instance) {
+		log.debug("Grabando Pedido instance");
 		Session session=sessionFactory.openSession();
 		try {
 			session.getTransaction().begin();
@@ -64,8 +64,8 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}
 
-	public void attachClean(Cotizacion instance) {
-		log.debug("attaching clean Cotizacion instance");
+	public void attachClean(Pedido instance) {
+		log.debug("attaching clean Pedido instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -75,8 +75,8 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}
 
-	public void delete(Cotizacion persistentInstance) {
-		log.debug("deleting Cotizacion instance");
+	public void delete(Pedido persistentInstance) {
+		log.debug("deleting Pedido instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -86,10 +86,10 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}
 
-	public Cotizacion merge(Cotizacion detachedInstance) {
-		log.debug("merging Cotizacion instance");
+	public Pedido merge(Pedido detachedInstance) {
+		log.debug("merging Pedido instance");
 		try {
-			Cotizacion result = (Cotizacion) sessionFactory.getCurrentSession()
+			Pedido result = (Pedido) sessionFactory.getCurrentSession()
 					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
@@ -98,12 +98,12 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 			throw re;
 		}
 	}
-	@Override
-	public Cotizacion findById(int id) {
-		Session session=sessionFactory.openSession();
-		log.debug("getting Cotizacion instance with id: " + id);
+
+	public Pedido findById(int id) {
+		log.debug("getting Pedido instance with id: " + id);
 		try {
-			Cotizacion instance = (Cotizacion) session.get("bean.Cotizacion", id);
+			Pedido instance = (Pedido) sessionFactory
+					.getCurrentSession().get("dao.impl.impl.Pedido", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -116,11 +116,11 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}
 
-	public List findByExample(Cotizacion instance) {
-		log.debug("finding Cotizacion instance by example");
+	public List findByExample(Pedido instance) {
+		log.debug("finding Pedido instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("dao.impl.impl.Cotizacion")
+					.createCriteria("dao.impl.impl.Pedido")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -149,13 +149,13 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 	}
 
 	@Override
-	public String generarCorrelativoNumeroCotizacion() {//Correlativo formateado
+	public String generarCorrelativoNumeroPedido() {//Correlativo formateado
 		// TODO Auto-generated method stub
 		Integer correl;
 		Session session=this.sessionFactory.openSession();
 		String numCont="000001";
 		try {
-			String query="select max(codigo)+1 from Cotizacion ";
+			String query="select max(codigo)+1 from Pedido ";
 			correl=(Integer) session.createQuery(query).uniqueResult();
 			if(correl!=null){
 				numCont=formatNumber(String.valueOf(correl));
@@ -167,5 +167,19 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 			throw e;
 		}	
 		
+	}
+
+	@Override
+	public Pedido findByNro(int id) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.openSession();
+		try {
+			Pedido cot=(Pedido)session.get(Pedido.class, id);
+			return cot;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
 	}
 }

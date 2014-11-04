@@ -1,13 +1,9 @@
 package managedBean;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -15,103 +11,104 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.primefaces.context.RequestContext;
 
+import bean.Cotizacion;
+import extras.Util;
 import form.PagoForm;
-
-import DAO.ClienteDAO;
 import DAO.CotizacionDAO;
 import DAO.DetallecotizacionDAO;
-import DAO.DocumentosclienteDAO;
 import DAO.PagoDAO;
-import DAO.ProductoDAO;
-import DAOIMPL.ClienteDAOImpl;
 import DAOIMPL.CotizacionDAOImpl;
 import DAOIMPL.DetallecotizacionDAOImpl;
-import DAOIMPL.DocumentosclienteDAOImpl;
 import DAOIMPL.PagoDAOImpl;
-import DAOIMPL.ProductoDAOImpl;
-import bean.Cliente;
-import bean.Cotizacion;
-import bean.Detallecotizacion;
-import bean.Documentoscliente;
-import bean.Producto;
 
 @ManagedBean(name = "pagoMB")
 @ViewScoped
 public class PagoMB implements Serializable {
 	private static final Log log = LogFactory.getLog(PagoMB.class);
-	
 	// DAO
 	CotizacionDAO cotDAO = new CotizacionDAOImpl();
 	DetallecotizacionDAO detCotDAO = new DetallecotizacionDAOImpl();
 	PagoDAO pagoDAO = new PagoDAOImpl();
 	//Variables
 	private static final long serialVersionUID = 1L;
-	PagoForm pagoForm;
-	Date fechaActual;
-	String tipoPago;
-	List productosCotizacion;
-	List productosFiltrados;
+	private PagoForm pagoForm;
+	
 	@PostConstruct
 	public void init() {
 		pagoForm=new PagoForm();
-		fechaActual=new Date();
+		String codCorrelativo=generarCodigoPago();
+		pagoForm.getPago().setCodigoCorrelativo(codCorrelativo);
+		pagoForm.getPago().setCodigo(Integer.parseInt(codCorrelativo));
+		pagoForm.setFechaActual(new Date());
+		pagoForm.setTieneRuc(false);
 	}
+	public String generarCodigoPago() {
 
-	private void limpiar() {
+		String correlativo = pagoDAO.generarCorrelativoCodigoPago();
+		
+		return (correlativo == null ? "000001" : correlativo);
+	}
+	public void limpiar() {
+		pagoForm=new PagoForm();
+		init();
 	}
 
 	public void registrarPago() throws Exception {
-		try {
-			log.info("Es correcta la transaccion :EXITO:");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			log.error("No pudo registrar pago");
-			e.printStackTrace();
-			throw e;
-		}
+		//limpiar();
+		RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage mensaje = null;
+		//log.error("No pudo registrar pago");
+		mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, "REGISTRO PAGOS", "ORDEN DE PAGO CON NRO: "+pagoForm.getPago().getCodigoCorrelativo()+" GENERADA  CORRECTAMENTE");
+        FacesContext.getCurrentInstance().addMessage(null, mensaje);
+        //context.addCallbackParam("ordenPago", pagoForm.getPago().getCodigoCorrelativo());
+        pagoForm.getPago().setCotizacion(buscarCotizacionPorCodigo(pagoForm.getCodCotFormateado()));
+        pagoDAO.registrarPago(pagoForm.getPago());
+        System.out.println("Exito");
 	}
+	
+	public void buscarCotizacion(){
+		
+		int nroCotizacion=Integer.parseInt(Util.obtenerNroCotizacionDeFormato(pagoForm.getCodCotFormateado()));
+		Cotizacion cotBuscada=cotDAO.findById(nroCotizacion);
+		if(cotBuscada!=null){
+			pagoForm.setCotizacion(cotBuscada);
+			System.out.println("codigo de detalle:"+pagoForm.getCotizacion().getDetallecotizacions().iterator().next().getCodigo());
+			}
+		else
+			lanzarMensaje("COTIZACION NO ENCONTRADA","LA COTIZACION CON DICHO CODIGO DE COTIZACION"+
+					pagoForm.getCodCotFormateado()+" NO EXISTE");
+	}
+	public void lanzarMensaje(String titulo,String detalle){
+		RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage mensaje = null;
+		mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, titulo, detalle);
+        FacesContext.getCurrentInstance().addMessage(null, mensaje);
+        //context.addCallbackParam("ordenPago", pagoForm.getPago().getCodigoCorrelativo());
+	}
+	public Cotizacion buscarCotizacionPorCodigo(String codigo){
+		Cotizacion cotizacion;
+		int nroCotizacion=Integer.parseInt(Util.obtenerNroCotizacionDeFormato(codigo));
+		cotizacion=cotDAO.findById(nroCotizacion);
+		return cotizacion;
+	}
+	
+	public void cambiarTipoPago(){
+		if(pagoForm.getTipoPago().equalsIgnoreCase("Factura"))
+			pagoForm.setTieneRuc(true);
+		else
+			pagoForm.setTieneRuc(false);
+	}
+	
 	//Getters and Setters
-
 	public PagoForm getPagoForm() {
 		return pagoForm;
 	}
-
 	public void setPagoForm(PagoForm pagoForm) {
 		this.pagoForm = pagoForm;
 	}
 
-	public Date getFechaActual() {
-		return fechaActual;
-	}
 
-	public void setFechaActual(Date fechaActual) {
-		this.fechaActual = fechaActual;
-	}
-
-	public String getTipoPago() {
-		return tipoPago;
-	}
-
-	public void setTipoPago(String tipoPago) {
-		this.tipoPago = tipoPago;
-	}
-
-	public List getProductosCotizacion() {
-		return productosCotizacion;
-	}
-
-	public void setProductosCotizacion(List productosCotizacion) {
-		this.productosCotizacion = productosCotizacion;
-	}
-
-	public List getProductosFiltrados() {
-		return productosFiltrados;
-	}
-
-	public void setProductosFiltrados(List productosFiltrados) {
-		this.productosFiltrados = productosFiltrados;
-	}
-	
 	
 }

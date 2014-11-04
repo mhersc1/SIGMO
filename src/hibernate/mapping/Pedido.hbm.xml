@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30/10/2014 03:50:51 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="bean.Pedido" table="PEDIDO" catalog="sigmo_desarrollo">
+        <id name="codigo" type="java.lang.Integer">
+            <column name="CODIGO" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cotizacion" class="bean.Cotizacion" fetch="join">
+            <column name="IDCOTIZACION" />
+        </many-to-one>
+        <property name="fecharegistro" type="java.util.Date">
+            <column name="FECHAREGISTRO" />
+        </property>
+    </class>
+</hibernate-mapping>
