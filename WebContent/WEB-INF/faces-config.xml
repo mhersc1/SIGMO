@@ -52,6 +52,11 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>listarPagos</from-outcome>
+			<to-view-id>/vistas/listarPagos.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>registrarPedido</from-outcome>
 			<to-view-id>/vistas/registrarPedido.xhtml</to-view-id>
 			<redirect />

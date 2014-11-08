@@ -104,7 +104,7 @@
 			<p:commandButton value="Limpiar" action="#{pagoMB.limpiar}"
 				update="panelOrdenPago" />
 			<p:commandButton value="Registrar" action="#{pagoMB.registrarPago}"
-				update="panelOrdenPago,growl2" />
+				update="panelOrdenPago,growl2" disabled="#{pagoMB.pagoForm.pago.estado==1}" />
 		</p:panel>
 	</h:form>
 </h:body>

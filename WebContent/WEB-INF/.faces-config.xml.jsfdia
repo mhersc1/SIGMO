@@ -46,10 +46,17 @@
    <PROCESS-ITEM-OUTPUT ID="registrarPago::#vistas#registrarPago.xhtml"
     NAME="output2" PATH="/vistas/registrarPago.xhtml"
     TARGET="rules:#vistas#registrarPago.xhtml" TITLE="registrarPago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listarPagos::#vistas#listarPagos.xhtml"
+    NAME="output3" PATH="/vistas/listarPagos.xhtml"
+    TARGET="rules:#vistas#listarPagos.xhtml" TITLE="listarPagos" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#registrarCotizacion.xhtml"
   PATH="/vistas/registrarCotizacion.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#vistas#registrarPago.xhtml"
   PATH="/vistas/registrarPago.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#vistas#registrarPedido.xhtml"
+  PATH="/vistas/registrarPedido.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#vistas#listarPagos.xhtml"
+  PATH="/vistas/listarPagos.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
