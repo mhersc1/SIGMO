@@ -109,7 +109,7 @@ public class CotizacionMB implements Serializable {
 			
 			if (getDetallesCotizacion() != null) {
 				for (Detallecotizacion det : getDetallesCotizacion()) {
-					if (det != null && det.getCodigo() != null && flagC) {
+					if (det != null && det.getCodigo() != null) {
 						det.setCotizacion(cot);
 						detalles.add(det);//Seran los detalles a grabar
 						flagP = true;
@@ -191,7 +191,7 @@ public class CotizacionMB implements Serializable {
 		ProductoDAO productoDAO = new ProductoDAOImpl();
 		productos = productoDAO.findAll();
 		return productos;
-	}
+	}	
 	
 	public void setProductosL(List<Producto> productosL) {
 		this.productosL = productosL;
@@ -232,16 +232,16 @@ public class CotizacionMB implements Serializable {
 		return codigoCot;
 	}
 	
-	public void setMessage(MessageBean message) {
-		this.message = message;
-	}
-
 	public List<Producto> getProductosL() {
 		return productosL;
 	}
 
 	public List<Producto> getFilteredProductos() {
 		return filteredProductos;
+	}
+	
+	public void setMessage(MessageBean message) {
+		this.message = message;
 	}
 
 	public MessageBean getMessage() {

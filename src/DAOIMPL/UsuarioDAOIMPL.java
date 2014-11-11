@@ -1,16 +1,15 @@
 package DAOIMPL;
 
-import java.util.List;
-
+import java.io.Serializable;
 import hibernate.HibernateUtil;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import bean.Usuario;
 import DAO.UsuarioDAO;
+import bean.Usuario;
 
-public class UsuarioDAOIMPL implements UsuarioDAO{
+public class UsuarioDAOIMPL implements Serializable,UsuarioDAO{
 		Session sesion=HibernateUtil.getSessionFactory().openSession();
 	@Override
 	public Usuario buscarUsuario(String usuario, String clave) {

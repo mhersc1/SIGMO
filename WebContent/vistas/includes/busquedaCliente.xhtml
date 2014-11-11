@@ -3,15 +3,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-		<ui:insert name="busqueda">
-			<h:form>
-				<h:panelGrid columns="2">
-					<p:growl id="messages" />
-					<p:splitButton value="Buscar Cliente" icon="ui-icon-search"
-						update="messages"
-						onclick="PF('dlgClientes').show();habilitarCliente(true);">
-						<p:menuitem value="Nuevo Cliente" icon="ui-icon-document"
-							action="#{clientMB.clean()}" onclick="limpiarCliente();" />
+	<h:outputScript library="js" name="cotizacion.js" target="head" />
+		<ui:insert name="busqueda">	
+		<h:form>		
+				<h:panelGrid columns="2">										
+					<p:splitButton value="Buscar Cliente" icon="ui-icon-search" type="button"						
+						onclick="PF('dlgClientes').show();desHabilitarCliente(true);">
+						<p:menuitem value="Nuevo Cliente" icon="ui-icon-document" 
+							update="@widgetVar(fieldPrincipal_Cliente),@widgetVar(fieldAdicional_Cliente)"
+							actionListener="#{clientMB.clean()}" onclick="limpiarCliente();" />
 						<p:menuitem value="Modificar Cliente" icon="ui-icon-wrench"
 							action="#{clientMB.clean()}" onclick="limpiarCliente();" />
 						<p:separator />
@@ -19,39 +19,52 @@
 							disable="true" />
 					</p:splitButton>
 				</h:panelGrid>
-			</h:form>
+		</h:form>
 		</ui:insert>
 		<ui:insert name="formulario">
-			<h:form id="clienteForm">
+		<h:form id="clienteForm">										
 				<p:fieldset id="dataCliente" legend="Datos principales"
 					widgetVar="fieldPrincipal_Cliente">
 					<h:panelGrid columns="2">
 						<h:column>
-							<p:outputLabel id="nombre" value="Nombres " />
+							<p:outputLabel id="nombre" value="Nombres (*)" />
 							<br />
+							<p:outputLabel id="apellidos" value="Apellidos (*)" />
 						</h:column>
 						<h:column>
+							<p:message id="name_cliente" for="nombresCliente" display="text"/>
 							<p:inputText id="nombresCliente" for="nombre"
-								value="#{clientMB.cliente.nombre} #{clientMB.cliente.apellidos}"
-								required="true" readonly="true" style="width:500px" />
-							<p:watermark for="nombresCliente"
-								value="Ingrese nombres y apellidos del cliente" />
+								value="#{clientMB.cliente.nombre}"
+								required="true" readonly="#{readOnlyCliente}" style="width:500px" requiredMessage="Campo Nombres obligatorio">							
+								<p:watermark for="nombresCliente"
+								value="Ingrese nombres del cliente" />	
+							</p:inputText>
+							<p:message id="lastname_cliente" for="lastnameCliente" display="text"/>
+							<p:inputText id="lastnameCliente" for="apellidos"
+								value="#{clientMB.cliente.apellidos}"
+								required="true" readonly="#{readOnlyCliente}" style="width:500px" requiredMessage="Campo Apellidos obligatorio">							
+								<p:watermark for="lastnameCliente"
+								value="Ingrese apellidos del cliente" />	
+							</p:inputText>							
 						</h:column>
 					</h:panelGrid>
 				</p:fieldset>
 				<p:fieldset id="dataAdicional" legend="Datos adicionales" widgetVar="fieldAdicional_Cliente">
 					<h:panelGrid columns="4">
 						<h:column>
-							<p:outputLabel id="correo" value="E-mail " />
+							<p:outputLabel id="correo" value="E-mail (*)" />
 							<br />
 							<p:outputLabel id="direccion" value="Direccion " />
 						</h:column>
 						<h:column>
-							<p:inputText id="correoCliente" for="correo"
-								value="#{clientMB.cliente.email}" readonly="true" />
+							<p:message id="email_cliente" for="correoCliente" display="text"/>
+							<p:inputText id="correoCliente" for="correo" required="true" requiredMessage="Campo Email obligatorio"
+								value="#{clientMB.cliente.email}" readonly="#{readOnlyCliente}" validatorMessage="Ingrese Email válido">								
+								<f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</p:inputText>
 							<br />
 							<p:inputText id="direccionCliente" for="direccion"
-								value="#{clientMB.cliente.direccion}" readonly="true" />
+								value="#{clientMB.cliente.direccion}" readonly="#{readOnlyCliente}" />
 						</h:column>
 						<h:column>
 							<p:outputLabel id="dni" value="DNI  " />
@@ -59,17 +72,23 @@
 							<p:outputLabel id="ruc" value="RUC  " />
 						</h:column>
 						<h:column>
-							<p:inputText id="dniCliente" for="dni"
-								value="#{clientMB.documentosCliente[0]}" readonly="true"
-								required="true" />
+							<p:message id="dni_cliente" for="dniCliente" display="text"/>
+							<p:inputText id="dniCliente" for="dni" converterMessage="Solo números" validatorMessage="Numeral de 8 digitos"
+								value="#{clientMB.documentosCliente[0]}" readonly="#{readOnlyCliente}">
+								<f:validateLongRange minimum="10000000" maximum="99999999"/>
+								<f:validateLength minimum="8" maximum="8"/>
+							</p:inputText>
 							<br />
-							<p:inputText id="rucCliente" for="ruc"
-								value="#{clientMB.documentosCliente[1]}" readonly="true"
-								required="true" />
+							<p:message id="ruc_cliente" for="rucCliente" display="text" />
+							<p:inputText id="rucCliente" for="ruc" converterMessage="Solo números" validatorMessage="Numeral de 11 digitos"
+								value="#{clientMB.documentosCliente[1]}" readonly="#{readOnlyCliente}" converter="javax.faces.Integer">								
+								<f:validateLongRange minimum="10000000000" maximum="99999999999"/>
+								<f:validateLength minimum="11" maximum="11"/>	
+							</p:inputText>
 						</h:column>
 					</h:panelGrid>
 				</p:fieldset>
-			</h:form>
+			</h:form>				
 		</ui:insert>
 	<ui:insert name="dialogo">
 		<h:form id="dialogClientes">

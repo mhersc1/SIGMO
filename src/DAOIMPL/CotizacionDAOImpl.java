@@ -4,6 +4,7 @@ package DAOIMPL;
 
 import hibernate.HibernateUtil;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -16,6 +17,7 @@ import org.hibernate.criterion.Example;
 
 import DAO.CotizacionDAO;
 import bean.Cotizacion;
+import extras.Util;
 
 /**
  * Home object for domain model class Cotizacion.
@@ -24,8 +26,7 @@ import bean.Cotizacion;
  */
 public class CotizacionDAOImpl implements CotizacionDAO {
 
-	private static final Log log = LogFactory.getLog(CotizacionDAOImpl.class);
-
+	private static final Log log = LogFactory.getLog(CotizacionDAOImpl.class);	
 	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 /*	protected SessionFactory getSessionFactory() {
@@ -63,7 +64,23 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 			throw re;
 		}
 	}
-
+	@Override
+	public List<Cotizacion> obtenerListaCotizacionesPorFecha(Date fechaDesde,
+			Date fechaHasta) {
+		java.sql.Date inicio;
+		java.sql.Date fin;
+		try {
+			inicio=new java.sql.Date(fechaDesde.getTime());
+			fin=new java.sql.Date(fechaHasta.getTime());
+			Session session=this.sessionFactory.openSession();
+			String hql= "from Cotizacion where fecharegistro >= '"+inicio+"' and fecharegistro <= '"+ fin+"'";
+			return (List<Cotizacion>)session.createQuery(hql).list();
+		} catch (HibernateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+	}
 	public void attachClean(Cotizacion instance) {
 		log.debug("attaching clean Cotizacion instance");
 		try {
@@ -131,22 +148,7 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 		}
 	}
 	
-	private String formatNumber(String correlativo){
-		/**
-		 * @formatNumber 	<RUC><FechaActual><correlativo>
-		 * 					10471113321814121991000001
-		 */
-		/**
-		 * @formatNumber 	<correlativo> //Hasta 6 digitos
-		 * 					000001
-		 */
-		String correl="";
-		int tam=(""+correlativo).length();
-		for (int i = 0; i < (6-tam); i++) {
-			correl += "0";
-		}
-		return correl+correlativo;
-	}
+	
 
 	@Override
 	public String generarCorrelativoNumeroCotizacion() {//Correlativo formateado
@@ -158,7 +160,7 @@ public class CotizacionDAOImpl implements CotizacionDAO {
 			String query="select max(codigo)+1 from Cotizacion ";
 			correl=(Integer) session.createQuery(query).uniqueResult();
 			if(correl!=null){
-				numCont=formatNumber(String.valueOf(correl));
+				numCont=Util.darFormatoNroCotizacion(String.valueOf(correl));
 			}
 			return numCont;
 		} catch (HibernateException e) {

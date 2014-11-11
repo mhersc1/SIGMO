@@ -27,6 +27,7 @@ public class PedidoMB implements Serializable {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
 	private String codigoPed;
 	private Date fechaRegistro;	
 	/**

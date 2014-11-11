@@ -2,7 +2,25 @@
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
-
+	<application>
+		<resource-bundle>
+			<base-name>parameters</base-name>
+			<var>param</var>
+		</resource-bundle>
+	</application>	
+	<navigation-rule>
+		<from-view-id>/vistas/bienvenida.xhtml</from-view-id>
+		<navigation-case>
+		<from-outcome>inicioSesionEmpleado</from-outcome>
+		<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+		<redirect />		
+		</navigation-case>
+		<navigation-case>
+		<from-outcome>solicitudCotizacion</from-outcome>
+		<to-view-id>/vistas/solicitudCotizacion.xhtml</to-view-id>
+		<redirect />
+		</navigation-case>
+	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/vistas/inicioSesion.xhtml</from-view-id>
 		
@@ -38,7 +56,7 @@
 		<from-view-id>/vistas/*</from-view-id>
 		<navigation-case>
 			<from-outcome>iniciarSesion</from-outcome>
-			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<to-view-id>/vistas/bienvenida.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
@@ -47,8 +65,18 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>listarCotizaciones</from-outcome>
+			<to-view-id>/vistas/listarCotizaciones.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>registrarPago</from-outcome>
 			<to-view-id>/vistas/registrarPago.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listarPagos</from-outcome>
+			<to-view-id>/vistas/listarPagos.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>

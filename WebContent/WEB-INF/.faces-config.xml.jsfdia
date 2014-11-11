@@ -35,21 +35,54 @@
  <PROCESS-ITEM NAME="rules:#vistas#*" PATH="/vistas/*"
   SHAPE="32,257,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#vistas#*:0" NAME="item" PATH="/vistas/*" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="iniciarSesion::#vistas#inicioSesion.xhtml"
-    NAME="output" PATH="/vistas/inicioSesion.xhtml"
-    TARGET="rules:#vistas#inicioSesion.xhtml" TITLE="iniciarSesion" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="iniciarSesion::#vistas#bienvenida.xhtml"
+    NAME="output" PATH="/vistas/bienvenida.xhtml"
+    TARGET="rules:#vistas#bienvenida.xhtml" TITLE="iniciarSesion" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="registrarCotizacion::#vistas#registrarCotizacion.xhtml"
     NAME="output1" PATH="/vistas/registrarCotizacion.xhtml"
     TARGET="rules:#vistas#registrarCotizacion.xhtml"
     TITLE="registrarCotizacion" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="registrarPago::#vistas#registrarPago.xhtml"
-    NAME="output2" PATH="/vistas/registrarPago.xhtml"
-    TARGET="rules:#vistas#registrarPago.xhtml" TITLE="registrarPago" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listarCotizaciones::#vistas#listarCotizaciones.xhtml"
+    NAME="output2" PATH="/vistas/listarCotizaciones.xhtml"
+    TARGET="rules:#vistas#listarCotizaciones.xhtml"
+    TITLE="listarCotizaciones" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="listarPagos::#vistas#listarPagos.xhtml"
+    NAME="output3" PATH="/vistas/listarPagos.xhtml"
+    TARGET="rules:#vistas#listarPagos.xhtml" TITLE="listarPagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="registrarPedido::#vistas#registrarPedido.xhtml" NAME="output4"
+    PATH="/vistas/registrarPedido.xhtml"
+    TARGET="rules:#vistas#registrarPedido.xhtml" TITLE="registrarPedido" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#vistas#registrarCotizacion.xhtml"
   PATH="/vistas/registrarCotizacion.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#vistas#registrarPago.xhtml"
   PATH="/vistas/registrarPago.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#vistas#registrarPedido.xhtml"
+  PATH="/vistas/registrarPedido.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#vistas#bienvenida.xhtml"
+  PATH="/vistas/bienvenida.xhtml" SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#vistas#bienvenida.xhtml:0" NAME="item"
+   PATH="/vistas/bienvenida.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="inicioSesionEmpleado::#vistas#inicioSesion.xhtml" NAME="output"
+    PATH="/vistas/inicioSesion.xhtml"
+    TARGET="rules:#vistas#inicioSesion.xhtml"
+    TITLE="inicioSesionEmpleado" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="solicitudCotizacion::#vistas#solicitudCotizacion.xhtml"
+    NAME="output1" PATH="/vistas/solicitudCotizacion.xhtml"
+    TARGET="rules:#vistas#solicitudCotizacion.xhtml"
+    TITLE="solicitudCotizacion" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#vistas#solicitudCotizacion.xhtml"
+  PATH="/vistas/solicitudCotizacion.xhtml" SHAPE="304,1265,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#vistas#listarPagos.xhtml"
+  PATH="/vistas/listarPagos.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#vistas#listarCotizaciones.xhtml"
+  PATH="/vistas/listarCotizaciones.xhtml" SHAPE="304,385,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

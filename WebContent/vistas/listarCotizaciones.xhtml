@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<h:body>
+	<h:form>
+		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
+		<ui:include src="/vistas/includes/opcionesMenuVentas.xhtml" />
+	</h:form>
+	<h:form  >
+		<h2 style="color:blue">Listado de Cotizaciones</h2>
+		<h:panelGrid columns="2" cellpadding="2">
+		<p:outputLabel for="desde" value="Desde:" />
+        <p:calendar id="desde" value="#{listarCotizacionMB.fechaDesde}" showOn="button" pattern="dd/MM/yyyy" />
+		<p:outputLabel for="hasta" value="Hasta:" />
+        <p:calendar id="hasta" value="#{listarCotizacionMB.fechaHasta}" showOn="button" pattern="dd/MM/yyyy"/>
+        <p:commandButton value="Buscar"
+							actionListener="#{listarCotizacionMB.buscarCotizacionesPorFechas}" icon="ui-icon-search"
+							 update="cotizaciones"/>
+        </h:panelGrid>
+		<p:dataTable id="cotizaciones" var="cotizacion"
+					value="#{listarCotizacionMB.cotizaciones}"
+					widgetVar="cots"
+					emptyMessage="Cotizaciones no encontrados"					
+					filteredValue="#{listarCotizacionMB.cotizacionesFiltro}">
+
+					<p:column filterBy="#{cotizacion.fecharegistro}" headerText="Fecha:" >						
+						<h:outputText value="#{cotizacion.fecharegistro}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>					
+					<p:column filterBy="#{cotizacion.codigoF}" headerText="Codigo" filterMatchMode="contains" >
+						<h:outputText value="#{cotizacion.codigoF}" />
+					</p:column>
+					<p:column 	filterBy="#{cotizacion.cliente.nombre.toUpperCase()} #{cotizacion.cliente.apellidos.toUpperCase()}" 
+								headerText="Cliente" filterMatchMode="contains">
+						<h:outputText value="#{cotizacion.cliente.nombre.toUpperCase()} #{cotizacion.cliente.apellidos.toUpperCase()}" />
+					</p:column>					
+					<p:column filterBy="#{cotizacion.importetotal}" headerText="Importe Total">
+						<h:outputText value="#{cotizacion.importetotal}" />
+					</p:column>
+					<p:column  headerText="Opciones">
+						<p:commandButton icon="ui-icon-search"></p:commandButton>
+						<p:commandButton icon="ui-icon-circle-close"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+	</h:form>
+</h:body>
+</html>

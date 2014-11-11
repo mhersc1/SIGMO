@@ -1,5 +1,7 @@
 package managedBean;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -7,13 +9,9 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean(name="message")
 @ViewScoped
-public class MessageBean {
+public class MessageBean implements Serializable{
 private String message;
 
-public MessageBean() {
-	// TODO Auto-generated constructor stub
-	
-}
 public String getMessage() {
 	return message;	
 }
@@ -50,6 +48,14 @@ public void showMessage(int option){
 		break;
 	case 8://Pedido no registrado
 		context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pedido no registrado", "El pedido no se pudo registrar."));
+		break;
+	//********************	Solicitud Cotizacion		**********************************
+	case 9://Solicitud Enviada
+		context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Solicitud Cotizacion enviada", "Envio exitoso."));
+		break;
+	case 10://Solicitud No Enviada
+		context.addMessage(null,new FacesMessage(FacesMessage.SEVERITY_FATAL, "Envio de solicitud defectuosa", "No se pudo enviar la solicitud. We're sorry!"));
+		break;
 	default:
 		break;
 	}

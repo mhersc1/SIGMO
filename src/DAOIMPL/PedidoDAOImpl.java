@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
+import extras.Util;
 import DAO.PedidoDAO;
 import bean.Pedido;
 
@@ -131,23 +132,6 @@ public class PedidoDAOImpl implements PedidoDAO {
 		}
 	}
 	
-	private String formatNumber(String correlativo){
-		/**
-		 * @formatNumber 	<RUC><FechaActual><correlativo>
-		 * 					10471113321814121991000001
-		 */
-		/**
-		 * @formatNumber 	<correlativo> //Hasta 6 digitos
-		 * 					000001
-		 */
-		String correl="";
-		int tam=(""+correlativo).length();
-		for (int i = 0; i < (6-tam); i++) {
-			correl += "0";
-		}
-		return correl+correlativo;
-	}
-
 	@Override
 	public String generarCorrelativoNumeroPedido() {//Correlativo formateado
 		// TODO Auto-generated method stub
@@ -158,7 +142,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 			String query="select max(codigo)+1 from Pedido ";
 			correl=(Integer) session.createQuery(query).uniqueResult();
 			if(correl!=null){
-				numCont=formatNumber(String.valueOf(correl));
+				numCont=Util.darFormatoNroCotizacion(String.valueOf(correl));
 			}
 			return numCont;
 		} catch (HibernateException e) {

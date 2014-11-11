@@ -27,12 +27,13 @@
 				<f:convertNumber integerOnly="true" type="number" minIntegerDigits="1" maxIntegerDigits="6"/>
 				<f:validateLongRange minimum="1" maximum="999999" />
 			</p:inputText>
-			<p:commandButton id="searchCot" onclick="limpiarCliente()" value="Buscar" action="#{pedMB.buscarCotizacion()}" update="@widgetVar(fieldPrincipal_Cliente),@widgetVar(fieldAdicional_Cliente),@widgetVar(msgs)"/>
+			<p:commandButton id="searchCot" onclick="desHabilitarCliente(true)" value="Buscar" action="#{pedMB.buscarCotizacion()}" update="@widgetVar(fieldPrincipal_Cliente),@widgetVar(fieldAdicional_Cliente),@widgetVar(msgs)"/>
 		</h:panelGrid>
 	</h:form>
 	<p:panel id="panelCliente" header="Datos del Cliente">
 	<p:outputLabel value="#{pedMB.getNroCotizacion()}"/>
 	<ui:decorate template="/vistas/includes/busquedaCliente.xhtml">
+		<ui:param name="readOnlyCliente" value="true" />
 		<ui:define name="busqueda" />
 	</ui:decorate>
 	</p:panel>

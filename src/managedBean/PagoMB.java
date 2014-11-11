@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.primefaces.context.RequestContext;
 
 import bean.Cotizacion;
+import extras.Constantes;
 import extras.Util;
 import form.PagoForm;
 import DAO.CotizacionDAO;
@@ -39,8 +40,8 @@ public class PagoMB implements Serializable {
 	public void init() {
 		pagoForm=new PagoForm();
 		String codCorrelativo=generarCodigoPago();
-		pagoForm.getPago().setCodigoCorrelativo(codCorrelativo);
 		pagoForm.getPago().setCodigo(Integer.parseInt(codCorrelativo));
+		pagoForm.getPago().setEstado(Constantes.PAGO_BORRADOR);
 		pagoForm.setFechaActual(new Date());
 		pagoForm.setTieneRuc(false);
 	}
@@ -59,13 +60,17 @@ public class PagoMB implements Serializable {
 		//limpiar();
 		RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage mensaje = null;
-		//log.error("No pudo registrar pago");
-		mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, "REGISTRO PAGOS", "ORDEN DE PAGO CON NRO: "+pagoForm.getPago().getCodigoCorrelativo()+" GENERADA  CORRECTAMENTE");
-        FacesContext.getCurrentInstance().addMessage(null, mensaje);
-        //context.addCallbackParam("ordenPago", pagoForm.getPago().getCodigoCorrelativo());
+		pagoForm.getPago().setEstado(Constantes.PAGO_GENERADO);
+		pagoForm.getPago().setFecha(pagoForm.getFechaActual());
         pagoForm.getPago().setCotizacion(buscarCotizacionPorCodigo(pagoForm.getCodCotFormateado()));
-        pagoDAO.registrarPago(pagoForm.getPago());
-        System.out.println("Exito");
+        if(pagoDAO.registrarPago(pagoForm.getPago())){
+        	mensaje = new FacesMessage(FacesMessage.SEVERITY_INFO, "REGISTRO PAGOS", "ORDEN DE PAGO CON NRO: "+pagoForm.getPago().getCodigoCorrelativo()+" GENERADA  CORRECTAMENTE");
+        	FacesContext.getCurrentInstance().addMessage(null, mensaje);
+        	}
+        else{
+        	mensaje = new FacesMessage(FacesMessage.SEVERITY_ERROR, "REGISTRO PAGOS", "ORDEN DE PAGO CON NRO: "+pagoForm.getPago().getCodigoCorrelativo()+" NO GENERADA");
+        	FacesContext.getCurrentInstance().addMessage(null, mensaje);
+        }
 	}
 	
 	public void buscarCotizacion(){
@@ -95,6 +100,8 @@ public class PagoMB implements Serializable {
 	}
 	
 	public void cambiarTipoPago(){
+		System.out.println("Hello!!");
+		System.out.println("omarx");
 		if(pagoForm.getTipoPago().equalsIgnoreCase("Factura"))
 			pagoForm.setTieneRuc(true);
 		else

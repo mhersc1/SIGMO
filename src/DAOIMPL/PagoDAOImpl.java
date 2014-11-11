@@ -1,12 +1,20 @@
 package DAOIMPL;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import hibernate.HibernateUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 import bean.Pago;
 
@@ -58,18 +66,31 @@ public class PagoDAOImpl implements PagoDAO{
 	}
 
 	@Override
-	public void registrarPago(Pago pago) {
-		// TODO Auto-generated method stub
+	public boolean registrarPago(Pago pago) {
 		try{
-		Session session=this.sessionFactory.openSession();
-		session.getTransaction().begin();
-		session.saveOrUpdate(pago);
-		session.getTransaction().commit(); 
-		session.close();
+			Session session=this.sessionFactory.openSession();
+			session.getTransaction().begin();
+			session.saveOrUpdate(pago);
+			session.getTransaction().commit(); 
+			session.close();
+			return true;
 		} catch (RuntimeException re) {
 			log.error("No se pudo grabar -->", re);
-		throw re;
+			return false;
 		}
+	}
+
+	@Override
+	public ArrayList<Pago> obtenerListaPagosPorFecha(Date fechaDesde,
+			Date fechaHasta) {
+		Session session=this.sessionFactory.openSession();
+		//String hqlQuery = "from Pago where fecha between '"+fechaDesde+"' and '"+ fechaHasta+"'";
+		
+		Criteria criteria = session.createCriteria(Pago.class)
+				   .add(Restrictions.between("fecha", fechaDesde, fechaHasta));
+		List<Pago> pagos=criteria.list();
+		session.close();
+		return (ArrayList<Pago>)pagos;
 	}
 	
 
