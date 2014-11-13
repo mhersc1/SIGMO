@@ -17,8 +17,8 @@ import extras.Util;
 import form.UsuarioForm;
 
 
-@SessionScoped
 @ManagedBean
+@SessionScoped
 public class LoginMB implements Serializable{
 	/**
 	 * 

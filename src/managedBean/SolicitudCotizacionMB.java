@@ -1,17 +1,15 @@
 package managedBean;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -24,6 +22,8 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import extras.Util;
+
 @ManagedBean(name = "solCotMB")
 @ViewScoped
 public class SolicitudCotizacionMB implements Serializable {
@@ -31,6 +31,7 @@ public class SolicitudCotizacionMB implements Serializable {
 	/**
 	 * 
 	 */
+	private Properties props;
 	private String solicitud;	
 	/**
 	 * Log ***
@@ -42,8 +43,12 @@ public class SolicitudCotizacionMB implements Serializable {
 	@ManagedProperty(value="#{message}")
 	private MessageBean message;
 	
+	@PostConstruct
+	public void init(){
+		props = Util.getProperties("parameters.properties");
+	}
 	public void enviarSolicitudCotizacion(){
-		List<String> parametros=new ArrayList<String>();
+		List<String> parametros=new ArrayList<String>();		
 		//agjh ...
 		String dni=(clienteMB.getDocumentosCliente().get(0)==null ||
 				clienteMB.getDocumentosCliente().get(0).equals(""))?
@@ -66,8 +71,9 @@ public class SolicitudCotizacionMB implements Serializable {
 		getSolicitud()+"\n\n"+
 		"**** SIGMO MADERAS POR MONTON :v ****";
 		System.out.println(body);
-		parametros.add(0, leerResourceBundle("email"));//Emisor
-		parametros.add(1, leerResourceBundle("email"));//Receptor
+		
+		parametros.add(0, props.getProperty("mail.smtp.user"));//Emisor
+		parametros.add(1, props.getProperty("mail.smtp.user"));//Receptor
 		parametros.add(2,"Envio Solicitud Cotizacion");//subject
 		parametros.add(3,body);//body
 		
@@ -86,19 +92,14 @@ public class SolicitudCotizacionMB implements Serializable {
 	}
 	
 	private boolean prepararEmail(List<String> parametros){
-		return enviarEmail(parametros,getProperties());		
+		return enviarEmail(parametros);		
 	}
-	private Properties getProperties(){
-		Properties props=System.getProperties();		
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", leerResourceBundle("host"));
-        props.put("mail.smtp.user", leerResourceBundle("email"));
-        props.put("mail.smtp.password", leerResourceBundle("password"));
-        props.put("mail.smtp.port", leerResourceBundle("port"));
-        props.put("mail.smtp.auth", "true");        
-        return props;
-	}
-	public boolean enviarEmail(List<String> parametros,Properties props){
+
+	public boolean enviarEmail(List<String> parametros){
+		/**
+		 * Descomentar si ejecuta SolicitudCotizacionTest.
+		 */
+		//Properties props=Util.getProperties("parameters.properties");
 		Session session=Session.getDefaultInstance(props);
 		MimeMessage message=new MimeMessage(session);
 		InternetAddress address;
@@ -128,21 +129,6 @@ public class SolicitudCotizacionMB implements Serializable {
 			return false;
 		}		
 	}
-	
-	private String leerResourceBundle(String key){
-		try {
-			FacesContext context=FacesContext.getCurrentInstance();
-			ResourceBundle bundle=context.getApplication().getResourceBundle(context,"param");
-			String valor=bundle.getString(key);			
-			return valor;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block			
-			log.info("Ocurrio excepcion al leer el ResourceBundle");
-			e.printStackTrace();
-			throw e;
-		}
-	}
-		
 	
 	public String getSolicitud() {
 		return solicitud;

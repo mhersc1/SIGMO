@@ -48,9 +48,9 @@
     NAME="output2" PATH="/vistas/listarCotizaciones.xhtml"
     TARGET="rules:#vistas#listarCotizaciones.xhtml"
     TITLE="listarCotizaciones" model-entity="JSFProcessItemOutput"/>
-   <PROCESS-ITEM-OUTPUT ID="listarPagos::#vistas#listarPagos.xhtml"
-    NAME="output3" PATH="/vistas/listarPagos.xhtml"
-    TARGET="rules:#vistas#listarPagos.xhtml" TITLE="listarPagos" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="registrarPago::#vistas#registrarPago.xhtml"
+    NAME="output3" PATH="/vistas/registrarPago.xhtml"
+    TARGET="rules:#vistas#registrarPago.xhtml" TITLE="registrarPago" model-entity="JSFProcessItemOutput"/>
    <PROCESS-ITEM-OUTPUT
     ID="registrarPedido::#vistas#registrarPedido.xhtml" NAME="output4"
     PATH="/vistas/registrarPedido.xhtml"

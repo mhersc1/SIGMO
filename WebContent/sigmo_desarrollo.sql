@@ -188,7 +188,7 @@ INSERT INTO `cotizacion` ( `FECHAREGISTRO`, `IMPORTETOTAL`, `IDCLIENTE`) VALUES
 ('1991-12-14', 450, 1);
 
 select * from detallecotizacion;
-INSERT INTO DETALLECOTIZACION(CODIGO,DESCRIPCION,NRODEPIEZAS,PRECIO,IMPORTE,CODCOTIZACION) 
+INSERT INTO detallecotizacion(CODIGO,DESCRIPCION,NRODEPIEZAS,PRECIO,IMPORTE,CODCOTIZACION) 
 VALUES('000024','MADERA CAOBA',10,2.5,25,1);
 INSERT INTO `documento` (`ID`, `TIPO`) VALUES
 (1, 'DNI'),
@@ -218,7 +218,7 @@ INSERT INTO `moneda` (`ID`, `UMON`,`UMONEDA`) VALUES
 (2, '$/.','DOLARES AMERICANOS'),
 (3, '€/.','EUROS AMERINDIOS');
 
-INSERT INTO PRODUCTO (CODIGO,DESCRIPCION,PRECIOUNIT,UNIDAD) VALUES
+INSERT INTO producto (CODIGO,DESCRIPCION,PRECIOUNIT,UNIDAD) VALUES
 (2225,'MADERA CAOBA  3 X 9 X 5 MTS',20.5,2),
 (2226,'MADERA EBANO  3 X 8 X 5 MTS',20.5,2),
 (2227,'MADERA ALAMOS 3 X 4 X 5 MTS',20.5,2),
@@ -246,4 +246,8 @@ INSERT INTO `rol` (`idRol`, `nombre`) VALUES
 
 
 INSERT INTO `usuario` (`idUsuario`, `usuario`, `clave`, `estado`, `fechaCreacion`, `idRol`) VALUES
-(4, 'maycol', 'espinoza', 1, '2014-09-16', 1);
+(4, 'maycol', 'espinoza', 1, '2014-09-16', 1),
+(5, 'gabriela', 'argume', 1, '2014-09-16', 4),
+(6, 'antonio', 'carrillo', 1, '2014-09-16', 2),
+(7, 'omar', 'cuba', 1, '2014-09-16', 3),
+(8, 'freddy', 'pineda', 1, '2014-09-16', 5);
