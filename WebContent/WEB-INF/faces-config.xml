@@ -80,6 +80,11 @@
 			<to-view-id>/vistas/registrarPedido.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>actualizarPrecioProducto</from-outcome>
+			<to-view-id>/vistas/actualizarPrecioProducto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 	
 	

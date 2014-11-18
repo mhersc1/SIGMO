@@ -64,6 +64,8 @@ public class Producto implements java.io.Serializable {
 	}
 
 	public BigDecimal getPreciounit() {
+		if(preciounit==null)
+			preciounit=new BigDecimal(0);
 		return this.preciounit;
 	}
 

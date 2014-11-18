@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head />
+<h:body>
+	<h:form id="form" method="post">
+		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
+		<ui:include src="/vistas/includes/opcionesMenuGerente.xhtml" />
+		<p:growl id="growl2" showDetail="true" life="3000" />
+
+		<p:panel id="panelProducto">	
+			
+			<p:panel header="Buscar Producto">
+					<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="7">
+						<p:outputLabel for="codProducto" value="Codigo :" />
+						<p:watermark for="codProducto" value="Ingresar Codigo"
+							id="watermarkCotizacion" />
+						<p:inputText id="codProducto"
+							value="#{productoMB.codigoABuscar}">
+							<f:validateRegex pattern="(([0-9]|\s)*)" />
+						</p:inputText>
+						
+						<p:commandButton value="Buscar"
+							actionListener="#{productoMB.buscarProducto}" icon="ui-icon-search"
+							update="panelProductoBuscado,growl2" />
+					</h:panelGrid>
+			</p:panel>
+			<p:panel id="panelProductoBuscado" header="Producto Encontrado">
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+					<p:outputLabel for="codProductoEnc" value="Codigo :" />
+					<h:inputText id="codProductoEnc" value="#{productoMB.productoEncontrado.codigo}" readonly="true" style="background-color:LightGray"/>
+					<p:outputLabel for="descProducto" value="Descripcion :" />
+					<h:inputText id="descProducto" value="#{productoMB.productoEncontrado.descripcion}" readonly="true" style="background-color:LightGray"/>
+					<p:outputLabel for="uMedida" value="Unidad de Medida :" />
+					<h:inputText id="uMedida" value="#{productoMB.productoEncontrado.unidad.umedida}" readonly="true" style="background-color:LightGray"/>
+					<p:outputLabel for="moneda" value="Moneda :" />
+					<h:inputText id="moneda" value="#{productoMB.productoEncontrado.moneda.umoneda}" readonly="true" style="background-color:LightGray"/>
+					<p:outputLabel for="precioUnitario" value="Precio Unitario :" />
+					<h:inputText id="precioUnitario" value="#{productoMB.productoEncontrado.preciounit}" />
+					</h:panelGrid>
+			</p:panel>
+
+			<p:commandButton value="Limpiar" action="#{productoMB.limpiar}"
+				update="panelProducto" />
+			<p:commandButton value="Actualizar" action="#{productoMB.actualizar}"
+				update="panelProducto,growl2" />
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

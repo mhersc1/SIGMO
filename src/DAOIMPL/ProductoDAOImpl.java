@@ -15,6 +15,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import DAO.ProductoDAO;
+import bean.Cotizacion;
 import bean.Producto;
 
 /**
@@ -39,10 +40,25 @@ public class ProductoDAOImpl implements ProductoDAO{
 		}
 	}
 */
+	
+	public void saveOrUpdate(Producto instance) {
+		log.debug("Grabando Producto instance");
+		Session session=sessionFactory.openSession();
+		try {
+			session.getTransaction().begin();
+			session.saveOrUpdate(instance);
+			session.getTransaction().commit();
+			log.debug("Se grabo con :exito: ");
+		} catch (RuntimeException re) {
+			log.error("No se pudo grabar -->", re);
+			throw re;
+		}
+	}
 	public void persist(Producto transientInstance) {
 		log.debug("persisting Producto instance");
 		try {
-			sessionFactory.getCurrentSession().persist(transientInstance);
+			Session session=sessionFactory.openSession();
+			session.persist(transientInstance);
 			log.debug("persist successful");
 		} catch (RuntimeException re) {
 			log.error("persist failed", re);
@@ -62,9 +78,10 @@ public class ProductoDAOImpl implements ProductoDAO{
 	}
 
 	public void attachClean(Producto instance) {
+		Session session=sessionFactory.openSession();
 		log.debug("attaching clean Producto instance");
 		try {
-			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
+			session.lock(instance, LockMode.NONE);
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
@@ -99,8 +116,9 @@ public class ProductoDAOImpl implements ProductoDAO{
 	public Producto findById(int id) {
 		log.debug("getting Producto instance with id: " + id);
 		try {
-			Producto instance = (Producto) sessionFactory.getCurrentSession()
-					.get("dao.impl.impl.Producto", id);
+			Session session=sessionFactory.openSession();
+			Producto instance = (Producto) session
+					.get("bean.Producto", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
