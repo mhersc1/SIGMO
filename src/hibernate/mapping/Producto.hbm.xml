@@ -20,5 +20,9 @@
         <property name="preciounit" type="big_decimal">
             <column name="PRECIOUNIT" precision="10" />
         </property>
+         <property name="stockDisponible" type="int" >
+            <column name="stockdisponible"  default="0"
+            />
+        </property>
     </class>
 </hibernate-mapping>

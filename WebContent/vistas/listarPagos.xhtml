@@ -9,40 +9,82 @@
 	<h:form id="form" method="post">
 		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
 		<ui:include src="/vistas/includes/opcionesMenuCajera.xhtml" />
-		<h2 style="color:blue">Listado de Pagos</h2>
+		<p:growl id="messages" showDetail="true" />
+		<h2 style="color: blue">Listado de Pagos</h2>
 		<h:panelGrid columns="2" cellpadding="2">
-		<p:outputLabel for="desde" value="Desde:" />
-        <p:calendar id="desde" value="#{listarPagoMB.fechaDesde}" showOn="button" pattern="dd/MM/yyyy" />
-		<p:outputLabel for="hasta" value="Hasta:" />
-        <p:calendar id="hasta" value="#{listarPagoMB.fechaHasta}" showOn="button" pattern="dd/MM/yyyy"/>
-        <p:commandButton value="Buscar"
-							actionListener="#{listarPagoMB.buscarCotizacionesPorFechas}" icon="ui-icon-search"
-							 update="pagos"/>
-        </h:panelGrid>
-		<p:dataTable id="pagos" var="pago"
-					value="#{listarPagoMB.pagos}"
-					emptyMessage="Pagos no encontrados"
-					filteredValue="#{listarPagoMB.pagosFiltro}">
+			<p:outputLabel for="desde" value="Desde:" />
+			<p:calendar id="desde" value="#{listarPagoMB.fechaDesde}"
+				showOn="button" pattern="dd/MM/yyyy" />
+			<p:outputLabel for="hasta" value="Hasta:" />
+			<p:calendar id="hasta" value="#{listarPagoMB.fechaHasta}"
+				showOn="button" pattern="dd/MM/yyyy" />
+			<p:commandButton value="Buscar"
+				actionListener="#{listarPagoMB.buscarPagosPorFechas}"
+				icon="ui-icon-search" update="pagos" />
+		</h:panelGrid>
+		<p:dataTable id="pagos" var="pago" value="#{listarPagoMB.pagos}"
+			emptyMessage="Pagos no encontrados"
+			filteredValue="#{listarPagoMB.pagosFiltro}"
+			 paginator="true" rows="10"
+                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
 
-					<p:column filterBy="#{pago.fecha}" headerText="Fecha:" >
-						<h:outputText value="#{pago.fecha}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
-						</h:outputText>
-					</p:column>
-					
-					<p:column filterBy="#{pago.codigoCorrelativo}" headerText="Codigo">
-						<h:outputText value="#{pago.codigoCorrelativo}" />
-					</p:column>
-					<p:column filterBy="#{pago.estadoDesc}" headerText="Estado">
-						<h:outputText value="#{pago.estadoDesc}" />
-					</p:column>
-					<p:column  headerText="Opciones">
-						<p:commandButton icon="ui-icon-search"></p:commandButton>
-						<p:commandButton icon="ui-icon-circle-close"></p:commandButton>
-					</p:column>
-				</p:dataTable>
-	
+			<p:column filterBy="#{pago.fecha}" headerText="Fecha:">
+				<h:outputText value="#{pago.fecha}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column filterBy="#{pago.codigoCorrelativo}" headerText="Codigo">
+				<h:outputText value="#{pago.codigoCorrelativo}" />
+			</p:column>
+			<p:column filterBy="#{pago.estadoDesc}" headerText="Estado">
+				<h:outputText value="#{pago.estadoDesc}" />
+			</p:column>
+			<p:column headerText="Opciones">
+				<p:commandButton icon="ui-icon-search" />
+				<p:commandButton icon="ui-icon-circle-close" onclick="confirmation.show()" type="button"/>
+			</p:column>
+		</p:dataTable>
+			<h3>Exportar consulta de stock de productos</h3>
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/xls.png"/>
+				<p:dataExporter type="xls" target="consultarProductos" fileName="pagos"
+					pageOnly="true" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/pdf.png"/>
+				<p:dataExporter type="pdf" target="consultarProductos" fileName="pagos"
+					pageOnly="true" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/csv.png" />
+				<p:dataExporter type="csv" target="consultarProductos" fileName="pagos"
+					pageOnly="true" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/xml.png" />
+				<p:dataExporter type="xml" target="consultarProductos" fileName="pagos"
+					pageOnly="true" />
+			</h:commandLink>
+			<p:confirmDialog message="Esta seguro de que desea eliminar el pago?"
+				showEffect="bounce" hideEffect="explode"
+				header="Eliminar Pago" severity="alert"
+				widgetVar="confirmation">
+
+				<p:commandButton value="Si" update="messages"
+					oncomplete="confirmation.hide()"
+					actionListener="#{listarPagoMB.eliminarPago(pago)}" />
+				<p:commandButton value="No" onclick="confirmation.hide()"
+					type="button" />
+
+			</p:confirmDialog>
+
+		
 	</h:form>
-	
+
 </h:body>
 </html>

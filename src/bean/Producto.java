@@ -13,7 +13,7 @@ public class Producto implements java.io.Serializable {
 	private Moneda moneda;
 	private String descripcion;
 	private BigDecimal preciounit;
-
+	private int stockDisponible;
 	public Producto() {
 	}
 
@@ -22,13 +22,17 @@ public class Producto implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
+	
+
 	public Producto(int codigo, Unidad unidad, Moneda moneda,
-			String descripcion, BigDecimal preciounit) {
+			String descripcion, BigDecimal preciounit, int stockDisponible) {
+		super();
 		this.codigo = codigo;
 		this.unidad = unidad;
 		this.moneda = moneda;
 		this.descripcion = descripcion;
 		this.preciounit = preciounit;
+		this.stockDisponible = stockDisponible;
 	}
 
 	public int getCodigo() {
@@ -73,4 +77,12 @@ public class Producto implements java.io.Serializable {
 		this.preciounit = preciounit;
 	}
 
+	public int getStockDisponible() {
+		return stockDisponible;
+	}
+
+	public void setStockDisponible(int stockDisponible) {
+		this.stockDisponible = stockDisponible;
+	}
+	
 }

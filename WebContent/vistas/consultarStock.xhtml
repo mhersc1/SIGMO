@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+	<h:form id="form">
+		<p:growl id="messages" />
+		<ui:include src="/vistas/includes/cabeceraSesion.xhtml" />
+		<ui:include src="/vistas/includes/opcionesMenuAlmacen.xhtml" />
+		<p:panel header="Consultar Stock">
+			<p:dataTable id="consultarProductos" var="producto"
+				value="#{consultarStockMB.productos}"
+				emptyMessage="Productos no encontrados"
+				filteredValue="#{consultarStockMB.productosFiltrados}" rows="10"
+				paginator="true" paginatorPosition="bottom">
+
+				<p:column filterBy="#{producto.codigo}" headerText="Codigo"
+					style="text-align:center">
+					<h:outputText value="#{producto.codigo}" />
+				</p:column>
+				<p:column filterBy="#{producto.descripcion}"
+					headerText="Descripcion" style="text-align:center">
+					<h:outputText value="#{producto.descripcion}" />
+				</p:column>
+				<p:column headerText="Precio Unitario" style="text-align:center">
+					<h:outputText value="S/#{producto.preciounit}" />
+				</p:column>
+				<p:column filterBy="#{producto.stockDisponible}"
+					headerText="Descripcion" style="text-align:center">
+					<h:outputText value="#{producto.descripcion}" />
+				</p:column>
+
+			</p:dataTable>
+			<h3>Exportar consulta de stock de productos</h3>
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/xls.png"/>
+				<p:dataExporter type="xls" target="consultarProductos" fileName="productosEnStock"
+					pageOnly="true" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/pdf.png"/>
+				<p:dataExporter type="pdf" target="consultarProductos" fileName="productosEnStock"
+					pageOnly="true" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/csv.png" />
+				<p:dataExporter type="csv" target="consultarProductos" fileName="productosEnStock"
+					pageOnly="true" />
+			</h:commandLink>
+
+			<h:commandLink>
+				<p:graphicImage value="../resources/img/xml.png" />
+				<p:dataExporter type="xml" target="consultarProductos" fileName="productosEnStock"
+					pageOnly="true" />
+			</h:commandLink>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

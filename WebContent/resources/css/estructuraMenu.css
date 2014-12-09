@@ -1,0 +1,27 @@
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+   font-family: arial;
+   font-size: 12px;
+}
+#wrapper {
+   min-height:100%;
+   position:relative;
+}
+#header {
+   padding:10px;
+   color:#fff;
+}
+#body {
+   padding:10px;
+   padding-bottom:150px;	/* Altura del footer */
+}
+#footer {
+   position:absolute;
+   bottom:0;
+   width:100%;
+   clear:both;
+   height:60px;   			/* Altura del footer */
+}

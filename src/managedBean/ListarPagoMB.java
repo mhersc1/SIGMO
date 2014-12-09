@@ -85,5 +85,7 @@ public class ListarPagoMB implements Serializable{
 	public void setPagosFiltro(ArrayList<Pago> pagosFiltro) {
 		this.pagosFiltro = pagosFiltro;
 	}
-	
+	public void eliminarPago(Pago pago){
+		System.out.println("LLEGO");
+	}
 }

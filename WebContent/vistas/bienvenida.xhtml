@@ -3,16 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head></h:head>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Bienvenido a SIGMO</title>
+	<link rel="stylesheet" type="text/css"	href="resources/css/estructuraMenu.css" />
+</h:head>
 <h:body>
-	<h:form method="post">	
-		<p:panel header="Bienvenidos a SIGMO...!" style="width: 400px;height:200px;
-			position: absolute;
-  			top: 50%;left:50%;margin-top: -100px;margin-left:-200px">
-  			<p:commandButton value="Cliente" action="solicitudCotizacion"/>
-  			<p:commandButton value="Empleado" action="inicioSesionEmpleado"/>
-		</p:panel>
+	<h:form method="post">
+		<div id="wrapper">
+			<div id="header">
+				<ui:include src="/vistas/cabecera.xhtml" />
+			</div>
+			<div id="body">
+				<ui:include src="/vistas/cuerpo.xhtml" />
+			</div>
+			<div id="footer">
+				<ui:include src="/vistas/pie.xhtml" />
+			</div>
+		</div>
+		
 	</h:form>
+	
 </h:body>
 </html>

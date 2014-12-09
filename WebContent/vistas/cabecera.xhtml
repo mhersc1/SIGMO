@@ -1,0 +1,23 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"    
+    >
+	    	<h:form>
+	    		<p:panel style="overflow: hidden; clear:both;">
+		    	<p:panel style="width:70%;float:left;">
+		    		<p:graphicImage value="resources/img/maderaSigmo.png" />
+		    	</p:panel>
+				<p:panel style="width:15%;float:right;">	
+					<p:commandButton action="irALogin"
+						icon="ui-icon-extlink" value="Ir a Login" />
+				</p:panel>
+				</p:panel>	
+				<br/>
+				
+				<p:commandButton action="solicitarCotizacion" value="Solicitar Cotizacion"  />
+				
+			</h:form>
+</ui:composition>

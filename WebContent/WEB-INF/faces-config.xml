@@ -3,23 +3,20 @@
 	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
-		
+
 	<navigation-rule>
 		<from-view-id>/vistas/bienvenida.xhtml</from-view-id>
 		<navigation-case>
-		<from-outcome>inicioSesionEmpleado</from-outcome>
-		<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
-		<redirect />		
+			<from-outcome>inicioSesionEmpleado</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
-		<navigation-case>
-		<from-outcome>solicitudCotizacion</from-outcome>
-		<to-view-id>/vistas/solicitudCotizacion.xhtml</to-view-id>
-		<redirect />
-		</navigation-case>
+	
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/vistas/inicioSesion.xhtml</from-view-id>
-		
+
+
 		<navigation-case>
 			<from-outcome>menuSecretaria</from-outcome>
 			<to-view-id>/vistas/menuSecretaria.xhtml</to-view-id>
@@ -45,14 +42,19 @@
 			<to-view-id>/vistas/menuAlmacen.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-		
-		
+
+
 	</navigation-rule>
 	<navigation-rule>
-		<from-view-id>/vistas/*</from-view-id>
+		<from-view-id>/*</from-view-id>
 		<navigation-case>
 			<from-outcome>iniciarSesion</from-outcome>
 			<to-view-id>/vistas/bienvenida.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>solicitarCotizacion</from-outcome>
+			<to-view-id>/vistas/solicitudCotizacion.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>
@@ -85,8 +87,29 @@
 			<to-view-id>/vistas/actualizarPrecioProducto.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>consultarStock</from-outcome>
+			<to-view-id>/vistas/consultarStock.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listarPagosAlmacen</from-outcome>
+			<to-view-id>/vistas/listarPagosAlmacen.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>registrarGuiaRemision</from-outcome>
+			<to-view-id>/vistas/registrarGuiaRemision.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>irALogin</from-outcome>
+			<to-view-id>/vistas/inicioSesion.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
 	</navigation-rule>
-	
-	
-	
+
+
+
 </faces-config>

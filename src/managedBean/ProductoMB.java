@@ -1,6 +1,7 @@
 package managedBean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -40,6 +41,10 @@ public class ProductoMB implements Serializable {
 			}
 			else
 				lanzarMensaje("Ingrese Codigo!","No ha Ingresado un codigo para buscar el producto");
+	}
+	
+	public ArrayList<Producto> buscarListaProductos(){
+		return null;
 	}
 	
 	public void limpiar(){
